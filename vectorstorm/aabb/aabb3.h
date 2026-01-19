@@ -28,6 +28,8 @@ namespace VECTORSTORM_NAMESPACE {
 template<typename T>
 class aabb3 {
 public:
+  using value_type = T;
+
   /**
    * Position of Min corner of bounding box.
    */

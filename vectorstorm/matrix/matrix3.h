@@ -34,6 +34,8 @@ namespace VECTORSTORM_NAMESPACE {
 template<typename T>
 class matrix3 {
 public:
+  using value_type = T;
+
   /// Data stored in column major order
   std::array<T, 9> data;
 

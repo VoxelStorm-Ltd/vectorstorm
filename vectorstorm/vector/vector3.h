@@ -41,6 +41,8 @@ namespace VECTORSTORM_NAMESPACE {
 template<typename T>
 class vector3 {
 public:
+  using value_type = T;
+
   union {
     /**
      * First element of vector, alias for X-coordinate.
