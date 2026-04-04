@@ -1,8 +1,12 @@
 #pragma once
 
-#include <cassert>
-#include <cstring>
+#include <algorithm>
 #include <array>
+#include <cassert>
+#include <cstdlib>
+#include <cstring>
+#include <stdexcept>
+#include <string>
 #include <type_traits>
 #include <sstream>
 #include "vectorstorm/epsilon.h"
@@ -556,24 +560,34 @@ public:
   }
 
   /**
-   * Get reference to element at postion (x,y).  Throws an exception if out of range.
+   * Get reference to element at position (x,y).  Throws an exception if out of range
+   * (or calls std::abort() if exceptions are disabled).
    * @param x Number of column (0..3)
    * @param y Number of row (0..3)
    */
   [[nodiscard]]
   inline constexpr T &at(unsigned int x, unsigned int y) __attribute__((__always_inline__)) {
-    if(x > 2 || y > 2) throw std::out_of_range("Matrix access at() function accepts x and y values 0..3, given " + std::to_string(x) + ", " + std::to_string(y));
+    #ifndef DISABLE_EXCEPTION_THROWING
+      if(x > 3 || y > 3) throw std::out_of_range("Matrix access at() function accepts x and y values 0..3, given " + std::to_string(x) + ", " + std::to_string(y));
+    #else
+      if(x > 3 || y > 3) std::abort();
+    #endif // DISABLE_EXCEPTION_THROWING
     return data[x * 4 + y];
   }
 
   /**
-   * Get constant reference to element at position (x,y).  Throws an exception if out of range.
+   * Get constant reference to element at position (x,y).  Throws an exception if out of range
+   * (or calls std::abort() if exceptions are disabled).
    * @param x Number of column (0..3)
    * @param y Number of row (0..3)
    */
   [[nodiscard]]
   inline constexpr T const &at(unsigned int x, unsigned int y) const __attribute__((__always_inline__)) {
-    if(x > 2 || y > 2) throw std::out_of_range("Matrix access at() function accepts x and y values 0..3, given " + std::to_string(x) + ", " + std::to_string(y));
+    #ifndef DISABLE_EXCEPTION_THROWING
+      if(x > 3 || y > 3) throw std::out_of_range("Matrix access at() function accepts x and y values 0..3, given " + std::to_string(x) + ", " + std::to_string(y));
+    #else
+      if(x > 3 || y > 3) std::abort();
+    #endif // DISABLE_EXCEPTION_THROWING
     return data[x * 4 + y];
   }
 

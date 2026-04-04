@@ -1,5 +1,11 @@
 #pragma once
 
+#include <array>
+#include <cassert>
+#include <cstdlib>
+#include <cstring>
+#include <stdexcept>
+#include <string>
 #include <type_traits>
 #include "vectorstorm/epsilon.h"
 #include "matrix3_forward.h"
@@ -8,10 +14,7 @@
 #include "vectorstorm/vector/vector3_forward.h"
 #include "vectorstorm/vector/vector4_forward.h"
 #include "vectorstorm/sqrt_fast.h"
-#ifdef VECTORSTORM_NO_BOOST
-  #include <array>
-  #include <cstring>
-#else
+#ifndef VECTORSTORM_NO_BOOST
   #include <boost/functional/hash_fwd.hpp>
 #endif // VECTORSTORM_NO_BOOST
 
@@ -375,24 +378,34 @@ public:
   }
 
   /**
-   * Get reference to element at position (x,y).  Throws an exception if out of range.
+   * Get reference to element at position (x,y).  Throws an exception if out of range
+   * (or calls std::abort() if exceptions are disabled).
    * @param x Number of column (0..2)
    * @param y Number of row (0..2)
    */
   [[nodiscard]]
   inline constexpr T &at(unsigned int x, unsigned int y) __attribute__((__always_inline__)) {
-    if(x > 2 || y > 2) throw std::out_of_range("Matrix access at() function accepts x and y values 0..2, given " + std::to_string(x) + ", " + std::to_string(y));
+    #ifndef DISABLE_EXCEPTION_THROWING
+      if(x > 2 || y > 2) throw std::out_of_range("Matrix access at() function accepts x and y values 0..2, given " + std::to_string(x) + ", " + std::to_string(y));
+    #else
+      if(x > 2 || y > 2) std::abort();
+    #endif // DISABLE_EXCEPTION_THROWING
     return data[x * 3 + y];
   }
 
   /**
-   * Get constant reference to element at position (x,y).  Throws an exception if out of range.
+   * Get constant reference to element at position (x,y).  Throws an exception if out of range
+   * (or calls std::abort() if exceptions are disabled).
    * @param x Number of column (0..2)
    * @param y Number of row (0..2)
    */
   [[nodiscard]]
   inline constexpr T const &at(unsigned int x, unsigned int y) const __attribute__((__always_inline__)) {
-    if(x > 2 || y > 2) throw std::out_of_range("Matrix access at() function accepts x and y values 0..2, given " + std::to_string(x) + ", " + std::to_string(y));
+    #ifndef DISABLE_EXCEPTION_THROWING
+      if(x > 2 || y > 2) throw std::out_of_range("Matrix access at() function accepts x and y values 0..2, given " + std::to_string(x) + ", " + std::to_string(y));
+    #else
+      if(x > 2 || y > 2) std::abort();
+    #endif // DISABLE_EXCEPTION_THROWING
     return data[x * 3 + y];
   }
 
