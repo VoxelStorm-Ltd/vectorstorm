@@ -7,7 +7,7 @@
 
 #ifdef VECTORSTORM_NAMESPACE
 namespace VECTORSTORM_NAMESPACE {
-#endif
+#endif // VECTORSTORM_NAMESPACE
 
 /**
  * Three-dimensional axis-aligned bounding-box (aka AABB) class.
@@ -523,6 +523,6 @@ static_assert(std::is_trivially_copyable_v<aabb3<float>>);
 
 #ifdef VECTORSTORM_NAMESPACE
 }
-#endif //VECTORSTORM_NAMESPACE
+#endif // VECTORSTORM_NAMESPACE
 
 #include "aabb3_types.h"

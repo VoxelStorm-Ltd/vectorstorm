@@ -15,11 +15,11 @@
   #define OPTIMISE_NO_STRICT_ALIASING __attribute__((__optimize__("no-strict-aliasing"))
 #else
   #define OPTIMISE_NO_STRICT_ALIASING
-#endif
+#endif // __has_cpp_attribute(__optimise__)
 
 #ifdef VECTORSTORM_NAMESPACE
 namespace VECTORSTORM_NAMESPACE {
-#endif
+#endif // VECTORSTORM_NAMESPACE
 
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wstrict-aliasing"
@@ -184,4 +184,4 @@ inline constexpr T sqrt_switchable(T value) noexcept {
 
 #ifdef VECTORSTORM_NAMESPACE
 }
-#endif
+#endif // VECTORSTORM_NAMESPACE

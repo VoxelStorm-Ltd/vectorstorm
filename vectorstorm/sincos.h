@@ -4,7 +4,7 @@
 
 #ifdef VECTORSTORM_NAMESPACE
 namespace VECTORSTORM_NAMESPACE {
-#endif
+#endif // VECTORSTORM_NAMESPACE
 
 template<typename T>
 inline static constexpr void sincos_any(T const angle_rad, T &out_sin, T &out_cos) __attribute__((__always_inline__));
@@ -14,7 +14,7 @@ inline static constexpr void sincos_any(T const angle_rad, T &out_sin, T &out_co
     sincos(angle_rad, &out_sin, &out_cos);
   #else
     __builtin_sincos(angle_rad, &out_sin, &out_cos);
-  #endif
+  #endif // defined(__EMSCRIPTEN__)
 }
 inline static constexpr void sincos_any(int const angle_rad, int &out_sin, int &out_cos) __attribute__((__always_inline__));
 inline static constexpr void sincos_any(int const angle_rad, int &out_sin, int &out_cos) {
@@ -34,7 +34,7 @@ inline static constexpr void sincos_any(int const angle_rad, int &out_sin, int &
   #else
     out_sin = static_cast<int>(std::sin(static_cast<float>(angle_rad)));
     out_cos = static_cast<int>(std::cos(static_cast<float>(angle_rad)));
-  #endif
+  #endif // defined(__EMSCRIPTEN__)
 }
 inline static constexpr void sincos_any(float const angle_rad, float &out_sin, float &out_cos) __attribute__((__always_inline__));
 inline static constexpr void sincos_any(float const angle_rad, float &out_sin, float &out_cos) {
@@ -45,7 +45,7 @@ inline static constexpr void sincos_any(float const angle_rad, float &out_sin, f
   #else
     out_sin = std::sin(angle_rad);
     out_cos = std::cos(angle_rad);
-  #endif
+  #endif // defined(__EMSCRIPTEN__)
 }
 inline static constexpr void sincos_any(long double const angle_rad, long double &out_sin, long double &out_cos) __attribute__((__always_inline__));
 inline static constexpr void sincos_any(long double const angle_rad, long double &out_sin, long double &out_cos) {
@@ -56,9 +56,9 @@ inline static constexpr void sincos_any(long double const angle_rad, long double
   #else
     out_sin = std::sin(angle_rad);
     out_cos = std::cos(angle_rad);
-  #endif
+  #endif // defined(__EMSCRIPTEN__)
 }
 
 #ifdef VECTORSTORM_NAMESPACE
 }
-#endif
+#endif // VECTORSTORM_NAMESPACE

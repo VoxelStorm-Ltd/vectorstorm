@@ -25,7 +25,7 @@
 
 #ifdef VECTORSTORM_NAMESPACE
 namespace VECTORSTORM_NAMESPACE {
-#endif
+#endif // VECTORSTORM_NAMESPACE
 
 /**
  * Class for matrix 4x4
@@ -598,7 +598,7 @@ public:
    */
   [[nodiscard]] [[deprecated("Use either multidimensional operator[] or .at(), counting from 0")]]
   inline constexpr T &operator()(unsigned int i, unsigned int j) noexcept __attribute__((__always_inline__)) {
-    assert(j != 0 && j < 5);
+    assert(i != 0 && i < 5 && j != 0 && j < 5 && "matrix4::operator() expects row and column indices in range 1..4");
     return operator[](j - 1, i - 1);
   }
 
@@ -609,7 +609,7 @@ public:
    */
   [[nodiscard]] [[deprecated("Use either multidimensional operator[] or .at(), counting from 0")]]
   inline constexpr T const &operator()(unsigned int i, unsigned int j) const noexcept __attribute__((__always_inline__)) {
-    assert(j != 0 && j < 5);
+    assert(i != 0 && i < 5 && j != 0 && j < 5 && "matrix4::operator() expects row and column indices in range 1..4");
     return operator[](j - 1, i - 1);
   }
 
@@ -718,7 +718,7 @@ public:
   inline constexpr matrix4<T> &operator=(T const *rhs) noexcept __attribute__((__always_inline__)) {
     /*
     for(int i = 0; i != 16; ++i) {
-      data[i] = (T)rhs[i];
+      data[i] = static_cast<T>(rhs[i]);
     }
     */
     std::memcpy(data.data(), rhs, sizeof(T) * 16);
@@ -1074,7 +1074,7 @@ static_assert(std::is_trivially_copyable_v<matrix4<float>>);
 
 #ifdef VECTORSTORM_NAMESPACE
 }
-#endif //VECTORSTORM_NAMESPACE
+#endif // VECTORSTORM_NAMESPACE
 
 #include "matrix4_types.h"
 

@@ -2,7 +2,7 @@
 
 #ifdef VECTORSTORM_NAMESPACE
 namespace VECTORSTORM_NAMESPACE {
-#endif
+#endif // VECTORSTORM_NAMESPACE
 
 //-------------------------------------
 // Typedef shortcuts for 2D vector
@@ -29,4 +29,4 @@ using vec2ui = vector2ui;
 
 #ifdef VECTORSTORM_NAMESPACE
 }
-#endif //VECTORSTORM_NAMESPACE
+#endif // VECTORSTORM_NAMESPACE

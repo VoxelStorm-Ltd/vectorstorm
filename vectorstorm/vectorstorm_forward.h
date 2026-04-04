@@ -6,7 +6,7 @@
 
 #ifdef VECTORSTORM_NAMESPACE
 namespace VECTORSTORM_NAMESPACE {
-#endif
+#endif // VECTORSTORM_NAMESPACE
 
 /// Forward declarations
 #include "vector/vector2_forward.h"
@@ -20,4 +20,4 @@ namespace VECTORSTORM_NAMESPACE {
 
 #ifdef VECTORSTORM_NAMESPACE
 }
-#endif
+#endif // VECTORSTORM_NAMESPACE

@@ -21,7 +21,7 @@
 
 #ifdef VECTORSTORM_NAMESPACE
 namespace VECTORSTORM_NAMESPACE {
-#endif
+#endif // VECTORSTORM_NAMESPACE
 
 /**
  * quaternion class implementing some quaternion algebra operations.
@@ -722,7 +722,7 @@ public:
 
 #ifdef VECTORSTORM_NAMESPACE
 }
-#endif //VECTORSTORM_NAMESPACE
+#endif // VECTORSTORM_NAMESPACE
 
 #include "quat_types.h"
 

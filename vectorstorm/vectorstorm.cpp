@@ -2,7 +2,7 @@
 
 #ifdef VECTORSTORM_NAMESPACE
 namespace VECTORSTORM_NAMESPACE {
-#endif
+#endif // VECTORSTORM_NAMESPACE
 
 #ifdef VECTORSTORM_PREINSTANTIATE
   template class vector2<float>;
@@ -47,4 +47,4 @@ namespace VECTORSTORM_NAMESPACE {
 
 #ifdef VECTORSTORM_NAMESPACE
 }
-#endif
+#endif // VECTORSTORM_NAMESPACE

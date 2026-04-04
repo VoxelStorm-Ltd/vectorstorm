@@ -21,7 +21,7 @@
 
 #ifdef VECTORSTORM_NAMESPACE
 namespace VECTORSTORM_NAMESPACE {
-#endif
+#endif // VECTORSTORM_NAMESPACE
 
 /**
  * Class for four dimensional vector.
@@ -999,7 +999,7 @@ public:
              y == static_cast<T>(0) &&
              z == static_cast<T>(0) &&
              w == static_cast<T>(0);
-    #endif //VECTORSTORM_SOFT_COMPARE
+    #endif // VECTORSTORM_SOFT_COMPARE
     */
     // the above may fail to detect cases where the sqrt of four tiny numbers would be zero
     return std::abs(x) < epsilon<T> &&
@@ -1149,7 +1149,7 @@ static_assert(std::is_trivially_copyable_v<vector4<float>>);
 
 #ifdef VECTORSTORM_NAMESPACE
 }
-#endif //VECTORSTORM_NAMESPACE
+#endif // VECTORSTORM_NAMESPACE
 
 #include "vector4_types.h"
 

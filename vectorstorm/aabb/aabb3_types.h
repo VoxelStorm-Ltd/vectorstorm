@@ -2,7 +2,7 @@
 
 #ifdef VECTORSTORM_NAMESPACE
 namespace VECTORSTORM_NAMESPACE {
-#endif
+#endif // VECTORSTORM_NAMESPACE
 
 /// 3D axis-aligned bounding box of floats
 using aabb3f  = aabb3<float>;
@@ -17,4 +17,4 @@ using aabb3ui = aabb3<unsigned int>;
 
 #ifdef VECTORSTORM_NAMESPACE
 }
-#endif //VECTORSTORM_NAMESPACE
+#endif // VECTORSTORM_NAMESPACE

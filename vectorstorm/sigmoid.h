@@ -8,7 +8,7 @@
 
 #ifdef VECTORSTORM_NAMESPACE
 namespace VECTORSTORM_NAMESPACE {
-#endif
+#endif // VECTORSTORM_NAMESPACE
 
 /// Multiple sigmoid functions: http://www.wolframalpha.com/input/?i=plot+of+y%3D0.5+-+%280.5+*+cos%28x+*+pi%29%29+and+y%3D0.5+%2B+%28%280.5+%2F+tanh%282.0%29%29+*+tanh%28%28x+*+4.0%29+-+2.0%29%29+and+y%3D%28%28%281+%2F+%281+%2B+e^%28%280.5+-+x%29+*+8%29%29+-+0.5%29+*+%281+%2F+%281+%2F+%281+%2B+e^%28-4%29%29+-+0.5%29%29%29+*+0.5%29+%2B+0.5++for+x%3D0+to1+
 // default sigmoid:
@@ -69,4 +69,4 @@ inline static constexpr T sigmoid_erf(T value) noexcept {
 
 #ifdef VECTORSTORM_NAMESPACE
 }
-#endif
+#endif // VECTORSTORM_NAMESPACE

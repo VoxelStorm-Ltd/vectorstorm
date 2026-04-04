@@ -6,7 +6,7 @@
 
 #ifdef VECTORSTORM_NAMESPACE
 namespace VECTORSTORM_NAMESPACE {
-#endif
+#endif // VECTORSTORM_NAMESPACE
 
 template<typename T>
 inline static constexpr T rad2deg(T const angle_rad) noexcept __attribute__((__always_inline__));
@@ -21,4 +21,4 @@ inline static constexpr T rad2deg(T const angle_rad) noexcept {
 
 #ifdef VECTORSTORM_NAMESPACE
 }
-#endif
+#endif // VECTORSTORM_NAMESPACE
