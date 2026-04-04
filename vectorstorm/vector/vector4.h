@@ -266,7 +266,7 @@ public:
    * @param nz initial z-coordinate value
    * @param nw initial w-coordinate value
    */
-  inline void constexpr assign(T nx = 0, T ny = 0, T nz = 0, T nw = 0) noexcept __attribute__((__always_inline__)) {
+  inline constexpr void assign(T nx = 0, T ny = 0, T nz = 0, T nw = 0) noexcept __attribute__((__always_inline__)) {
     x = nx;
     y = ny;
     z = nz;
@@ -278,14 +278,14 @@ public:
    * Copy operator
    * @param rhs Right hand side argument of binary operator.
    */
-  inline vector4<T> constexpr &operator=(vector4<T> const &rhs) noexcept __attribute__((__always_inline__)) = default;
+  inline constexpr vector4<T> &operator=(vector4<T> const &rhs) noexcept __attribute__((__always_inline__)) = default;
 
   /**
    * Copy casting operator
    * @param rhs Right hand side argument of binary operator.
    */
   template<typename FromT> __attribute__((__always_inline__))
-  inline vector4<T> constexpr &operator=(vector4<FromT> const &rhs) noexcept {
+  inline constexpr vector4<T> &operator=(vector4<FromT> const &rhs) noexcept {
     x = static_cast<T>(rhs.x);
     y = static_cast<T>(rhs.y);
     z = static_cast<T>(rhs.z);
@@ -297,7 +297,7 @@ public:
    * Copy operator to vector4 from vector3
    * @param rhs Right hand side argument of binary operator.
    */
-  inline vector4<T> constexpr &operator=(vector3<T> const &rhs) noexcept __attribute__((__always_inline__)) {
+  inline constexpr vector4<T> &operator=(vector3<T> const &rhs) noexcept __attribute__((__always_inline__)) {
     x = rhs.x;
     y = rhs.y;
     z = rhs.z;
@@ -310,7 +310,7 @@ public:
    * @param rhs Right hand side argument of binary operator.
    */
   template<typename FromT> __attribute__((__always_inline__))
-  inline vector4<T> constexpr &operator=(vector3<FromT> const &rhs) noexcept {
+  inline constexpr vector4<T> &operator=(vector3<FromT> const &rhs) noexcept {
     x = static_cast<T>(rhs.x);
     y = static_cast<T>(rhs.y);
     z = static_cast<T>(rhs.z);
@@ -322,14 +322,14 @@ public:
    * Move assignment operator
    * @param rhs Right hand side argument of binary operator.
    */
-  inline vector4<T> constexpr &operator=(vector4<T> &&rhs) noexcept __attribute__((__always_inline__)) = default;
+  inline constexpr vector4<T> &operator=(vector4<T> &&rhs) noexcept __attribute__((__always_inline__)) = default;
 
   /**
    * Move assignment casting operator.
    * @param rhs Right hand side argument of binary operator.
    */
   template<typename FromT> __attribute__((__always_inline__))
-  inline vector4<T> constexpr &operator=(vector4<FromT> &&rhs) noexcept {
+  inline constexpr vector4<T> &operator=(vector4<FromT> &&rhs) noexcept {
     x = static_cast<T>(std::move(rhs.x));
     y = static_cast<T>(std::move(rhs.y));
     z = static_cast<T>(std::move(rhs.z));
@@ -341,7 +341,7 @@ public:
    * Move assignment operator to vector4 from vector3
    * @param rhs Right hand side argument of binary operator.
    */
-  inline vector4<T> constexpr &operator=(vector3<T> &&rhs) noexcept __attribute__((__always_inline__)) {
+  inline constexpr vector4<T> &operator=(vector3<T> &&rhs) noexcept __attribute__((__always_inline__)) {
     x = std::move(rhs.x);
     y = std::move(rhs.y);
     z = std::move(rhs.z);
@@ -354,7 +354,7 @@ public:
    * @param rhs Right hand side argument of binary operator.
    */
   template<typename FromT> __attribute__((__always_inline__))
-  inline vector4<T> constexpr &operator=(vector3<FromT> &&rhs) noexcept {
+  inline constexpr vector4<T> &operator=(vector3<FromT> &&rhs) noexcept {
     x = static_cast<T>(std::move(rhs.x));
     y = static_cast<T>(std::move(rhs.y));
     z = static_cast<T>(std::move(rhs.z));
@@ -370,7 +370,7 @@ public:
    * else reference to w coordinate.
    */
   [[nodiscard]]
-  inline T constexpr &operator[](unsigned int n) noexcept __attribute__((__always_inline__)) {
+  inline constexpr T &operator[](unsigned int n) noexcept __attribute__((__always_inline__)) {
     return n == 0u ? x : (n == 1u ? y : (n == 2u ? z : w));
   }
 
@@ -382,7 +382,7 @@ public:
    * else reference to w coordinate.
    */
   [[nodiscard]]
-  inline T constexpr const &operator[](unsigned int n) const noexcept __attribute__((__always_inline__)) {
+  inline constexpr T const &operator[](unsigned int n) const noexcept __attribute__((__always_inline__)) {
     return n == 0u ? x : (n == 1u ? y : (n == 2u ? z : w));
   }
 
@@ -392,7 +392,7 @@ public:
    * @param rhs Right hand side argument of binary operator.
    */
   [[nodiscard]]
-  inline vector4<T> constexpr operator+(vector4<T> const &rhs) const noexcept __attribute__((__always_inline__)) {
+  inline constexpr vector4<T> operator+(vector4<T> const &rhs) const noexcept __attribute__((__always_inline__)) {
     return vector4<T>(x + rhs.x, y + rhs.y, z + rhs.z, w + rhs.w);
   }
 
@@ -401,7 +401,7 @@ public:
    * @param rhs Right hand side argument of binary operator.
    */
   [[nodiscard]]
-  inline vector4<T> constexpr operator-(vector4<T> const &rhs) const noexcept __attribute__((__always_inline__)) {
+  inline constexpr vector4<T> operator-(vector4<T> const &rhs) const noexcept __attribute__((__always_inline__)) {
     return vector4<T>(x - rhs.x, y - rhs.y, z - rhs.z, w - rhs.w);
   }
 
@@ -410,7 +410,7 @@ public:
    * @param rhs Right hand side argument of binary operator.
    */
   [[nodiscard]]
-  inline vector4<T> constexpr operator*(vector4<T> const &rhs) const noexcept __attribute__((__always_inline__)) {
+  inline constexpr vector4<T> operator*(vector4<T> const &rhs) const noexcept __attribute__((__always_inline__)) {
     return vector4<T>(x * rhs.x, y * rhs.y, z * rhs.z, w * rhs.w);
   }
 
@@ -419,7 +419,7 @@ public:
    * @param rhs Right hand side argument of binary operator.
    */
   [[nodiscard]]
-  inline vector4<T> constexpr operator/(vector4<T> const &rhs) const noexcept __attribute__((__always_inline__)) {
+  inline constexpr vector4<T> operator/(vector4<T> const &rhs) const noexcept __attribute__((__always_inline__)) {
     return vector4<T>(x / rhs.x, y / rhs.y, z / rhs.z, w / rhs.w);
   }
 
@@ -427,7 +427,7 @@ public:
    * Addition operator
    * @param rhs Right hand side argument of binary operator.
    */
-  inline vector4<T> constexpr &operator+=(vector4<T> const &rhs) noexcept __attribute__((__always_inline__)) {
+  inline constexpr vector4<T> &operator+=(vector4<T> const &rhs) noexcept __attribute__((__always_inline__)) {
     x += rhs.x;
     y += rhs.y;
     z += rhs.z;
@@ -439,7 +439,7 @@ public:
    * Subtraction operator
    * @param rhs Right hand side argument of binary operator.
    */
-  inline vector4<T> constexpr &operator-=(vector4<T> const &rhs) noexcept __attribute__((__always_inline__)) {
+  inline constexpr vector4<T> &operator-=(vector4<T> const &rhs) noexcept __attribute__((__always_inline__)) {
     x -= rhs.x;
     y -= rhs.y;
     z -= rhs.z;
@@ -451,7 +451,7 @@ public:
    * Multiplication operator
    * @param rhs Right hand side argument of binary operator.
    */
-  inline vector4<T> constexpr &operator*=(vector4<T> const &rhs) noexcept __attribute__((__always_inline__)) {
+  inline constexpr vector4<T> &operator*=(vector4<T> const &rhs) noexcept __attribute__((__always_inline__)) {
     x *= rhs.x;
     y *= rhs.y;
     z *= rhs.z;
@@ -463,7 +463,7 @@ public:
    * Division operator
    * @param rhs Right hand side argument of binary operator.
    */
-  inline vector4<T> constexpr &operator/=(vector4<T> const &rhs) noexcept __attribute__((__always_inline__)) {
+  inline constexpr vector4<T> &operator/=(vector4<T> const &rhs) noexcept __attribute__((__always_inline__)) {
     x /= rhs.x;
     y /= rhs.y;
     z /= rhs.z;
@@ -476,7 +476,7 @@ public:
    * @param rhs Right hand side argument of binary operator.
    */
   [[nodiscard]]
-  inline vector4<T> constexpr operator+(vector3<T> const &rhs) const noexcept __attribute__((__always_inline__)) {
+  inline constexpr vector4<T> operator+(vector3<T> const &rhs) const noexcept __attribute__((__always_inline__)) {
     return vector4<T>(x + rhs.x, y + rhs.y, z + rhs.z, w);
   }
 
@@ -485,7 +485,7 @@ public:
    * @param rhs Right hand side argument of binary operator.
    */
   [[nodiscard]]
-  inline vector4<T> constexpr operator-(vector3<T> const &rhs) const noexcept __attribute__((__always_inline__)) {
+  inline constexpr vector4<T> operator-(vector3<T> const &rhs) const noexcept __attribute__((__always_inline__)) {
     return vector4<T>(x - rhs.x, y - rhs.y, z - rhs.z, w);
   }
 
@@ -494,7 +494,7 @@ public:
    * @param rhs Right hand side argument of binary operator.
    */
   [[nodiscard]]
-  inline vector4<T> constexpr operator*(vector3<T> const &rhs) const noexcept __attribute__((__always_inline__)) {
+  inline constexpr vector4<T> operator*(vector3<T> const &rhs) const noexcept __attribute__((__always_inline__)) {
     return vector4<T>(x * rhs.x, y * rhs.y, z * rhs.z, w);
   }
 
@@ -503,7 +503,7 @@ public:
    * @param rhs Right hand side argument of binary operator.
    */
   [[nodiscard]]
-  inline vector4<T> constexpr operator/(vector3<T> const &rhs) const noexcept __attribute__((__always_inline__)) {
+  inline constexpr vector4<T> operator/(vector3<T> const &rhs) const noexcept __attribute__((__always_inline__)) {
     return vector4<T>(x / rhs.x, y / rhs.y, z / rhs.z, w);
   }
 
@@ -512,7 +512,7 @@ public:
    * @param rhs Right hand side argument of binary operator.
    */
   [[nodiscard]]
-  inline vector4<T> constexpr operator%(vector3<T> const &rhs) const noexcept __attribute__((__always_inline__)) {
+  inline constexpr vector4<T> operator%(vector3<T> const &rhs) const noexcept __attribute__((__always_inline__)) {
     return vector4<T>(x % rhs.x, y % rhs.y, z % rhs.z, w);
   }
 
@@ -520,7 +520,7 @@ public:
    * Addition operator with 3-vector
    * @param rhs Right hand side argument of binary operator.
    */
-  inline vector4<T> constexpr &operator+=(vector3<T> const &rhs) noexcept __attribute__((__always_inline__)) {
+  inline constexpr vector4<T> &operator+=(vector3<T> const &rhs) noexcept __attribute__((__always_inline__)) {
     x += rhs.x;
     y += rhs.y;
     z += rhs.z;
@@ -531,7 +531,7 @@ public:
    * Subtraction operator with 3-vector
    * @param rhs Right hand side argument of binary operator.
    */
-  inline vector4<T> constexpr &operator-=(vector3<T> const &rhs) noexcept __attribute__((__always_inline__)) {
+  inline constexpr vector4<T> &operator-=(vector3<T> const &rhs) noexcept __attribute__((__always_inline__)) {
     x -= rhs.x;
     y -= rhs.y;
     z -= rhs.z;
@@ -542,7 +542,7 @@ public:
    * Multiplication operator with 3-vector
    * @param rhs Right hand side argument of binary operator.
    */
-  inline vector4<T> constexpr &operator*=(vector3<T> const &rhs) noexcept __attribute__((__always_inline__)) {
+  inline constexpr vector4<T> &operator*=(vector3<T> const &rhs) noexcept __attribute__((__always_inline__)) {
     x *= rhs.x;
     y *= rhs.y;
     z *= rhs.z;
@@ -553,7 +553,7 @@ public:
    * Division operator with 3-vector
    * @param rhs Right hand side argument of binary operator.
    */
-  inline vector4<T> constexpr &operator/=(vector3<T> const &rhs) noexcept __attribute__((__always_inline__)) {
+  inline constexpr vector4<T> &operator/=(vector3<T> const &rhs) noexcept __attribute__((__always_inline__)) {
     x /= rhs.x;
     y /= rhs.y;
     z /= rhs.z;
@@ -564,7 +564,7 @@ public:
    * Modulo operator with 3-vector
    * @param rhs Right hand side argument of binary operator.
    */
-  inline vector4<T> constexpr &operator%=(vector3<T> const &rhs) noexcept __attribute__((__always_inline__)) {
+  inline constexpr vector4<T> &operator%=(vector3<T> const &rhs) noexcept __attribute__((__always_inline__)) {
     x %= rhs.x;
     y %= rhs.y;
     z %= rhs.z;
@@ -576,7 +576,7 @@ public:
    * @param rhs Right hand side argument of binary operator.
    */
   [[nodiscard]]
-  inline vector4<T> constexpr operator+(vector2<T> const &rhs) const noexcept __attribute__((__always_inline__)) {
+  inline constexpr vector4<T> operator+(vector2<T> const &rhs) const noexcept __attribute__((__always_inline__)) {
     return vector4<T>(x + rhs.x, y + rhs.y, z, w);
   }
 
@@ -585,7 +585,7 @@ public:
    * @param rhs Right hand side argument of binary operator.
    */
   [[nodiscard]]
-  inline vector4<T> constexpr operator-(vector2<T> const &rhs) const noexcept __attribute__((__always_inline__)) {
+  inline constexpr vector4<T> operator-(vector2<T> const &rhs) const noexcept __attribute__((__always_inline__)) {
     return vector4<T>(x - rhs.x, y - rhs.y, z, w);
   }
 
@@ -594,7 +594,7 @@ public:
    * @param rhs Right hand side argument of binary operator.
    */
   [[nodiscard]]
-  inline vector4<T> constexpr operator*(vector2<T> const &rhs) const noexcept __attribute__((__always_inline__)) {
+  inline constexpr vector4<T> operator*(vector2<T> const &rhs) const noexcept __attribute__((__always_inline__)) {
     return vector4<T>(x * rhs.x, y * rhs.y, z, w);
   }
 
@@ -603,7 +603,7 @@ public:
    * @param rhs Right hand side argument of binary operator.
    */
   [[nodiscard]]
-  inline vector4<T> constexpr operator/(vector2<T> const &rhs) const noexcept __attribute__((__always_inline__)) {
+  inline constexpr vector4<T> operator/(vector2<T> const &rhs) const noexcept __attribute__((__always_inline__)) {
     return vector4<T>(x / rhs.x, y / rhs.y, z, w);
   }
 
@@ -611,7 +611,7 @@ public:
    * Addition operator with 2-vector
    * @param rhs Right hand side argument of binary operator.
    */
-  inline vector4<T> constexpr &operator+=(vector2<T> const &rhs) noexcept __attribute__((__always_inline__)) {
+  inline constexpr vector4<T> &operator+=(vector2<T> const &rhs) noexcept __attribute__((__always_inline__)) {
     x += rhs.x;
     y += rhs.y;
     return *this;
@@ -621,7 +621,7 @@ public:
    * Subtraction operator with 2-vector
    * @param rhs Right hand side argument of binary operator.
    */
-  inline vector4<T> constexpr &operator-=(vector2<T> const &rhs) noexcept __attribute__((__always_inline__)) {
+  inline constexpr vector4<T> &operator-=(vector2<T> const &rhs) noexcept __attribute__((__always_inline__)) {
     x -= rhs.x;
     y -= rhs.y;
     return *this;
@@ -631,7 +631,7 @@ public:
    * Multiplication operator with 2-vector
    * @param rhs Right hand side argument of binary operator.
    */
-  inline vector4<T> constexpr &operator*=(vector2<T> const &rhs) noexcept __attribute__((__always_inline__)) {
+  inline constexpr vector4<T> &operator*=(vector2<T> const &rhs) noexcept __attribute__((__always_inline__)) {
     x *= rhs.x;
     y *= rhs.y;
     return *this;
@@ -641,7 +641,7 @@ public:
    * Division operator with 2-vector
    * @param rhs Right hand side argument of binary operator.
    */
-  inline vector4<T> constexpr &operator/=(vector2<T> const &rhs) noexcept __attribute__((__always_inline__)) {
+  inline constexpr vector4<T> &operator/=(vector2<T> const &rhs) noexcept __attribute__((__always_inline__)) {
     x /= rhs.x;
     y /= rhs.y;
     return *this;
@@ -651,7 +651,7 @@ public:
    * Dot product of two vectors.
    * @param rhs Right hand side argument of binary operator.
    */
-  inline T constexpr dot(vector4<T> const &rhs) const noexcept __attribute__((__always_inline__)) {
+  inline constexpr T dot(vector4<T> const &rhs) const noexcept __attribute__((__always_inline__)) {
     return (x * rhs.x) +
            (y * rhs.y) +
            (z * rhs.z) +
@@ -664,7 +664,7 @@ public:
    * Multiplication by 3x3 matrix operator
    * @param rhs Right hand side argument of binary operator.
    */
-  inline vector4<T> constexpr &operator*=(matrix3<T> const &rhs) noexcept __attribute__((__always_inline__)) {
+  inline constexpr vector4<T> &operator*=(matrix3<T> const &rhs) noexcept __attribute__((__always_inline__)) {
     *this = rhs * *this;
     return *this;
   }
@@ -673,7 +673,7 @@ public:
    * Multiplication by 4x4 matrix operator
    * @param rhs Right hand side argument of binary operator.
    */
-  inline vector4<T> constexpr &operator*=(matrix4<T> const &rhs) noexcept __attribute__((__always_inline__)) {
+  inline constexpr vector4<T> &operator*=(matrix4<T> const &rhs) noexcept __attribute__((__always_inline__)) {
     *this = rhs * *this;
     return *this;
   }
@@ -689,7 +689,7 @@ public:
    * Otherwise, direct equality comparison is used.
    */
   [[nodiscard]]
-  inline bool constexpr operator==(vector4<T> const &rhs) const noexcept __attribute__((__always_inline__)) {
+  inline constexpr bool operator==(vector4<T> const &rhs) const noexcept __attribute__((__always_inline__)) {
     #ifdef VECTORSTORM_SOFT_COMPARE
       return std::abs(x - rhs.x) < epsilon<T> &&
              std::abs(y - rhs.y) < epsilon<T> &&
@@ -712,7 +712,7 @@ public:
    * @return not (lhs == rhs) :-P
    */
   [[nodiscard]]
-  inline bool constexpr operator!=(vector4<T> const &rhs) const noexcept __attribute__((__always_inline__)) {
+  inline constexpr bool operator!=(vector4<T> const &rhs) const noexcept __attribute__((__always_inline__)) {
     return !(*this == rhs);
   }
 
@@ -722,7 +722,7 @@ public:
    * @note Returns true if all components are less than rhs' components.
    */
   [[nodiscard]]
-  inline bool constexpr operator<(vector4<T> const &rhs) const noexcept __attribute__((__always_inline__)) {
+  inline constexpr bool operator<(vector4<T> const &rhs) const noexcept __attribute__((__always_inline__)) {
     return (x < rhs.x) &&
            (y < rhs.y) &&
            (y < rhs.z) &&
@@ -735,7 +735,7 @@ public:
    * @note Returns true if all components are greater than rhs' components.
    */
   [[nodiscard]]
-  inline bool constexpr operator>(vector4<T> const &rhs) const noexcept __attribute__((__always_inline__)) {
+  inline constexpr bool operator>(vector4<T> const &rhs) const noexcept __attribute__((__always_inline__)) {
     return (x > rhs.x) &&
            (y > rhs.y) &&
            (y > rhs.z) &&
@@ -748,7 +748,7 @@ public:
    * @note Returns true if all components are less than or equal to rhs' components.
    */
   [[nodiscard]]
-  inline bool constexpr operator<=(vector4<T> const &rhs) const noexcept __attribute__((__always_inline__)) {
+  inline constexpr bool operator<=(vector4<T> const &rhs) const noexcept __attribute__((__always_inline__)) {
     return (x <= rhs.x) &&
            (y <= rhs.y) &&
            (y <= rhs.z) &&
@@ -761,7 +761,7 @@ public:
    * @note Returns true if all components are greater than or equal to rhs' components.
    */
   [[nodiscard]]
-  inline bool constexpr operator>=(vector4<T> const &rhs) const noexcept __attribute__((__always_inline__)) {
+  inline constexpr bool operator>=(vector4<T> const &rhs) const noexcept __attribute__((__always_inline__)) {
     return (x >= rhs.x) &&
            (y >= rhs.y) &&
            (y >= rhs.z) &&
@@ -774,7 +774,7 @@ public:
    * @return vector with unary + applied to its components
    */
   [[nodiscard]]
-  inline vector4<T> constexpr operator+() const noexcept __attribute__((__always_inline__)) {
+  inline constexpr vector4<T> operator+() const noexcept __attribute__((__always_inline__)) {
     return vector4<T>(+x, +y, +z, +w);
   }
   /**
@@ -782,7 +782,7 @@ public:
    * @return negated vector
    */
   [[nodiscard]]
-  inline vector4<T> constexpr operator-() const noexcept __attribute__((__always_inline__)) {
+  inline constexpr vector4<T> operator-() const noexcept __attribute__((__always_inline__)) {
     return vector4<T>(-x, -y, -z, -w);
   }
 
@@ -793,7 +793,7 @@ public:
    * @param rhs Right hand side argument of binary operator.
    */
   [[nodiscard]]
-  inline vector4<T> constexpr operator+(T rhs) const noexcept __attribute__((__always_inline__)) {
+  inline constexpr vector4<T> operator+(T rhs) const noexcept __attribute__((__always_inline__)) {
     return vector4<T>(x + rhs, y + rhs, z + rhs, w + rhs);
   }
 
@@ -802,7 +802,7 @@ public:
    * @param rhs Right hand side argument of binary operator.
    */
   [[nodiscard]]
-  inline vector4<T> constexpr operator-(T rhs) const noexcept __attribute__((__always_inline__)) {
+  inline constexpr vector4<T> operator-(T rhs) const noexcept __attribute__((__always_inline__)) {
     return vector4<T>(x - rhs, y - rhs, z - rhs, w - rhs);
   }
 
@@ -811,7 +811,7 @@ public:
    * @param rhs Right hand side argument of binary operator.
    */
   [[nodiscard]]
-  inline vector4<T> constexpr operator*(T rhs) const noexcept __attribute__((__always_inline__)) {
+  inline constexpr vector4<T> operator*(T rhs) const noexcept __attribute__((__always_inline__)) {
     return vector4<T>(x * rhs, y * rhs, z * rhs, w * rhs);
   }
 
@@ -820,7 +820,7 @@ public:
    * @param rhs Right hand side argument of binary operator.
    */
   [[nodiscard]]
-  inline vector4<T> constexpr operator/(T rhs) const noexcept __attribute__((__always_inline__)) {
+  inline constexpr vector4<T> operator/(T rhs) const noexcept __attribute__((__always_inline__)) {
     return vector4<T>(x / rhs, y / rhs, z / rhs, w / rhs);
   }
 
@@ -829,7 +829,7 @@ public:
    * @param rhs Right hand side argument of binary operator.
    */
   [[nodiscard]]
-  inline vector4<T> constexpr operator%(T rhs) const noexcept __attribute__((__always_inline__)) {
+  inline constexpr vector4<T> operator%(T rhs) const noexcept __attribute__((__always_inline__)) {
     return vector4<T>(x % rhs, y % rhs, z % rhs, w % rhs);
   }
 
@@ -837,7 +837,7 @@ public:
    * Addition operator
    * @param rhs Right hand side argument of binary operator.
    */
-  inline vector4<T> constexpr &operator+=(T rhs) noexcept __attribute__((__always_inline__)) {
+  inline constexpr vector4<T> &operator+=(T rhs) noexcept __attribute__((__always_inline__)) {
     x += rhs;
     y += rhs;
     z += rhs;
@@ -849,7 +849,7 @@ public:
    * Subtraction operator
    * @param rhs Right hand side argument of binary operator.
    */
-  inline vector4<T> constexpr &operator-=(T rhs) noexcept __attribute__((__always_inline__)) {
+  inline constexpr vector4<T> &operator-=(T rhs) noexcept __attribute__((__always_inline__)) {
     x -= rhs;
     y -= rhs;
     z -= rhs;
@@ -861,7 +861,7 @@ public:
    * Multiplication operator
    * @param rhs Right hand side argument of binary operator.
    */
-  inline vector4<T> constexpr &operator*=(T rhs) noexcept __attribute__((__always_inline__)) {
+  inline constexpr vector4<T> &operator*=(T rhs) noexcept __attribute__((__always_inline__)) {
     x *= rhs;
     y *= rhs;
     z *= rhs;
@@ -873,7 +873,7 @@ public:
    * Division operator
    * @param rhs Right hand side argument of binary operator.
    */
-  inline vector4<T> constexpr &operator/=(T rhs) noexcept __attribute__((__always_inline__)) {
+  inline constexpr vector4<T> &operator/=(T rhs) noexcept __attribute__((__always_inline__)) {
     x /= rhs;
     y /= rhs;
     z /= rhs;
@@ -885,7 +885,7 @@ public:
    * Modulo operator
    * @param rhs Right hand side argument of binary operator.
    */
-  inline vector4<T> constexpr &operator%=(T rhs) noexcept __attribute__((__always_inline__)) {
+  inline constexpr vector4<T> &operator%=(T rhs) noexcept __attribute__((__always_inline__)) {
     x %= rhs;
     y %= rhs;
     z %= rhs;
@@ -899,7 +899,7 @@ public:
    * @return pointer to the first element in the vector
    */
   [[nodiscard]]
-  inline T constexpr *data() noexcept __attribute__((__always_inline__)) {
+  inline constexpr T *data() noexcept __attribute__((__always_inline__)) {
     return &x;
   }
   /**
@@ -907,7 +907,7 @@ public:
    * @return pointer to the first element in the vector, const version
    */
   [[nodiscard]]
-  inline T constexpr const *data() const noexcept __attribute__((__always_inline__)) {
+  inline constexpr T const *data() const noexcept __attribute__((__always_inline__)) {
     return &x;
   }
 
@@ -915,27 +915,27 @@ public:
    * Iteration helpers for range-based for
    */
   [[nodiscard]]
-  inline T constexpr *begin() noexcept __attribute__((__always_inline__)) {
+  inline constexpr T *begin() noexcept __attribute__((__always_inline__)) {
     return data();
   }
   [[nodiscard]]
-  inline T constexpr *end() noexcept __attribute__((__always_inline__)) {
+  inline constexpr T *end() noexcept __attribute__((__always_inline__)) {
     return data() + size();
   }
   [[nodiscard]]
-  inline T constexpr const *begin() const noexcept __attribute__((__always_inline__)) {
+  inline constexpr T const *begin() const noexcept __attribute__((__always_inline__)) {
     return data();
   }
   [[nodiscard]]
-  inline T constexpr const *end() const noexcept __attribute__((__always_inline__)) {
+  inline constexpr T const *end() const noexcept __attribute__((__always_inline__)) {
     return data() + size();
   }
   [[nodiscard]]
-  inline T constexpr const *cbegin() const noexcept __attribute__((__always_inline__)) {
+  inline constexpr T const *cbegin() const noexcept __attribute__((__always_inline__)) {
     return begin();
   }
   [[nodiscard]]
-  inline T constexpr const *cend() const noexcept __attribute__((__always_inline__)) {
+  inline constexpr T const *cend() const noexcept __attribute__((__always_inline__)) {
     return end();
   }
 
@@ -944,7 +944,7 @@ public:
    * @return number of elements (will always return 4)
    */
   [[nodiscard]]
-  static inline unsigned int constexpr size() noexcept __attribute__((__always_inline__)) __attribute__((__const__)) {
+  static inline constexpr unsigned int size() noexcept __attribute__((__always_inline__)) __attribute__((__const__)) {
     return 4u;
   }
 
@@ -957,7 +957,7 @@ public:
    * of more expensive length() method.
    */
   [[nodiscard]]
-  inline T constexpr length_sq() const noexcept __attribute__((__always_inline__)) {
+  inline constexpr T length_sq() const noexcept __attribute__((__always_inline__)) {
     return x * x + y * y + z * z + w * w;
   }
 
@@ -966,7 +966,7 @@ public:
    * @return length of vector
    */
   template<sqrt_mode mode = sqrt_mode::std> [[nodiscard]]
-  inline T __attribute__((__always_inline__)) constexpr length() const noexcept {
+  inline constexpr T __attribute__((__always_inline__)) length() const noexcept {
     return sqrt_switchable<mode>(length_sq());
   }
   /**
@@ -974,7 +974,7 @@ public:
    * @return length of vector
    */
   [[nodiscard]] [[deprecated("Use length<vector4<T>::sqrt_mode::fast>()")]]
-  inline T constexpr length_fast() const noexcept __attribute__((__always_inline__)) __attribute__((__pure__)) {
+  inline constexpr T length_fast() const noexcept __attribute__((__always_inline__)) __attribute__((__pure__)) {
     return length<sqrt_mode::fast>();
   }
   /**
@@ -982,7 +982,7 @@ public:
    * @return length of vector
    */
   [[nodiscard]] [[deprecated("Use length<vector4<T>::sqrt_mode::coarse>()")]]
-  inline T constexpr length_faster() const noexcept __attribute__((__always_inline__)) __attribute__((__pure__)) {
+  inline constexpr T length_faster() const noexcept __attribute__((__always_inline__)) __attribute__((__pure__)) {
     return length<sqrt_mode::coarse>();
   }
   /**
@@ -990,7 +990,7 @@ public:
    * @return whether vector is zero length
    */
   [[nodiscard]]
-  inline bool constexpr length_zero() const noexcept __attribute__((__always_inline__)) {
+  inline constexpr bool length_zero() const noexcept __attribute__((__always_inline__)) {
     /*
     #ifdef VECTORSTORM_SOFT_COMPARE
       ...
@@ -1012,34 +1012,34 @@ public:
    * normalise vector
    */
   template<sqrt_mode mode = sqrt_mode::std>
-  inline void __attribute__((__always_inline__)) constexpr normalise() noexcept {
+  inline constexpr void __attribute__((__always_inline__)) normalise() noexcept {
     *this /= length<mode>();
   }
   [[deprecated("Use normalise<vector4<T>::sqrt_mode::fast>()")]]
-  inline void constexpr normalise_fast() noexcept __attribute__((__always_inline__)) {
+  inline constexpr void normalise_fast() noexcept __attribute__((__always_inline__)) {
     normalise<sqrt_mode::fast>();
   }
   [[deprecated("Use normalise<vector4<T>::sqrt_mode::coarse>()")]]
-  inline void constexpr normalise_faster() noexcept __attribute__((__always_inline__)) {
+  inline constexpr void normalise_faster() noexcept __attribute__((__always_inline__)) {
     normalise<sqrt_mode::coarse>();
   }
   template<sqrt_mode mode = sqrt_mode::std> [[nodiscard]]
-  inline vector4<T> __attribute__((__always_inline__)) constexpr normalise_copy() const noexcept {
+  inline constexpr vector4<T> __attribute__((__always_inline__)) normalise_copy() const noexcept {
     return *this / length<mode>();
   }
   [[nodiscard]] [[deprecated("Use normalise_copy<vector4<T>::sqrt_mode::fast>()")]]
-  inline vector4<T> constexpr normalise_copy_fast() const noexcept __attribute__((__always_inline__)) {
+  inline constexpr vector4<T> normalise_copy_fast() const noexcept __attribute__((__always_inline__)) {
     return normalise_copy<sqrt_mode::fast>();
   }
   [[nodiscard]] [[deprecated("Use normalise_copy<vector4<T>::sqrt_mode::coarse>()")]]
-  inline vector4<T> constexpr normalise_copy_faster() const noexcept __attribute__((__always_inline__)) {
+  inline constexpr vector4<T> normalise_copy_faster() const noexcept __attribute__((__always_inline__)) {
     return normalise_copy<sqrt_mode::coarse>();
   }
   /**
    * normalise vector, with added zero safety check
    */
   template<sqrt_mode mode = sqrt_mode::std>
-  inline void __attribute__((__always_inline__)) constexpr normalise_safe() noexcept {
+  inline constexpr void __attribute__((__always_inline__)) normalise_safe() noexcept {
     if(length_zero()) {
       assign();
     } else {
@@ -1047,7 +1047,7 @@ public:
     }
   }
   template<sqrt_mode mode = sqrt_mode::std> [[nodiscard]]
-  inline vector4<T> __attribute__((__always_inline__)) constexpr normalise_safe_copy() const noexcept {
+  inline constexpr vector4<T> __attribute__((__always_inline__)) normalise_safe_copy() const noexcept {
     if(length_zero()) {
       return {};
     } else {
@@ -1058,14 +1058,14 @@ public:
   /**
    * Absolute vector (make all values positive)
    */
-  inline void constexpr abs() noexcept __attribute__((__always_inline__)) {
+  inline constexpr void abs() noexcept __attribute__((__always_inline__)) {
     x = std::abs(x);
     y = std::abs(y);
     z = std::abs(z);
     w = std::abs(w);
   }
   [[nodiscard]]
-  inline vector4<T> constexpr abs_copy() const noexcept __attribute__((__always_inline__)) {
+  inline constexpr vector4<T> abs_copy() const noexcept __attribute__((__always_inline__)) {
     return vector4<T>(std::abs(x), std::abs(y), std::abs(z), std::abs(w));
   }
 
@@ -1080,7 +1080,7 @@ public:
    * can get result (extrapolation?)
    */
   [[nodiscard("Interpolation does not modify the input vectors")]]
-  inline vector4<T> constexpr lerp(T fact, vector4<T> const &new_r) const noexcept __attribute__((__always_inline__)) {
+  inline constexpr vector4<T> lerp(T fact, vector4<T> const &new_r) const noexcept __attribute__((__always_inline__)) {
     return (*this) + (new_r - (*this)) * fact;
   }
 
@@ -1100,7 +1100,7 @@ public:
    * @return Constant Pointer to internally stored (in management of class vector4<T>)
    * used for passing vector4<T> values to gl*4[fd] functions.
    */
-  inline constexpr operator const T*() const noexcept __attribute__((__always_inline__)) {
+  inline constexpr operator T const*() const noexcept __attribute__((__always_inline__)) {
     return reinterpret_cast<T const*>(this);
   }
 
@@ -1109,7 +1109,7 @@ public:
    * transform. If the w coordinate is equal to zero, the result is not divided.
    * @return (x/w, y/w, z/w) iff w != 0 otherwise (x,y,z)
    */
-  inline vector3<T> constexpr xyz() const noexcept __attribute__((__always_inline__)) {
+  inline constexpr vector3<T> xyz() const noexcept __attribute__((__always_inline__)) {
     return w == 0 ? vector3<T>(x, y, z) : vector3<T>(x / w, y / w, z / w);
   }
 
@@ -1129,7 +1129,7 @@ public:
    * Gets string representation.
    */
   [[nodiscard]]
-  inline std::string CONSTEXPR_IF_NO_CLANG to_string() const noexcept __attribute__((__always_inline__)) {
+  inline CONSTEXPR_IF_NO_CLANG std::string to_string() const noexcept __attribute__((__always_inline__)) {
     std::ostringstream oss;
     oss << *this;
     return oss.str();
@@ -1139,7 +1139,7 @@ public:
    * Gets a 3D vector subset.
    */
   [[nodiscard]]
-  inline vector3<T> constexpr to_3d() const noexcept __attribute__((__always_inline__)) {
+  inline constexpr vector3<T> to_3d() const noexcept __attribute__((__always_inline__)) {
     return vector3<T>(x, y, z);
   }
 };
@@ -1194,7 +1194,7 @@ struct hash<vector4<T>> {
    * @return Hash value
    */
   size_t operator()(vector4<T> const &value) const {
-    size_t hashvalue = 0;
+    size_t hashvalue{0};
     HASH_COMBINE(hashvalue, value.x);
     HASH_COMBINE(hashvalue, value.y);
     HASH_COMBINE(hashvalue, value.z);
@@ -1213,7 +1213,7 @@ struct hash<vector4<T>> {
  */
 template<typename T>
 size_t hash_value(vector4<T> const &value) {
-  size_t hashvalue = 0;
+  size_t hashvalue{0};
   HASH_COMBINE(hashvalue, value.x);
   HASH_COMBINE(hashvalue, value.y);
   HASH_COMBINE(hashvalue, value.z);

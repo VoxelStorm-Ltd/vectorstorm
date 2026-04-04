@@ -192,7 +192,7 @@ public:
    * @param y Complex coefficient for j complex constant.
    * @param z Complex coefficient for k complex constant.
    */
-  inline void constexpr assign(T w_ = 0, T x = 0, T y = 0, T z = 0) noexcept __attribute__((__always_inline__)) {
+  inline constexpr void assign(T w_ = 0, T x = 0, T y = 0, T z = 0) noexcept __attribute__((__always_inline__)) {
     w = w_;
     v.assign(x, y, z);
   }
@@ -201,14 +201,14 @@ public:
    * Copy operator
    * @param rhs Right hand side argument of binary operator.
    */
-  inline quaternion<T> constexpr &operator=(quaternion<T> const &rhs) noexcept __attribute__((__always_inline__)) = default;
+  inline constexpr quaternion<T> &operator=(quaternion<T> const &rhs) noexcept __attribute__((__always_inline__)) = default;
 
   /**
    * Copy convert operator
    * @param rhs Right hand side argument of binary operator.
    */
   template<typename FromT> __attribute__((__always_inline__))
-  inline quaternion<T> constexpr &operator=(quaternion<FromT> const &rhs) noexcept {
+  inline constexpr quaternion<T> &operator=(quaternion<FromT> const &rhs) noexcept {
     v = rhs.v;
     w = static_cast<T>(rhs.w);
     return *this;
@@ -218,14 +218,14 @@ public:
    * Move assignment operator
    * @param rhs Right hand side argument of binary operator.
    */
-  inline quaternion<T> constexpr &operator=(quaternion<T> &&rhs) noexcept __attribute__((__always_inline__)) = default;
+  inline constexpr quaternion<T> &operator=(quaternion<T> &&rhs) noexcept __attribute__((__always_inline__)) = default;
 
   /**
    * Move assignment convert operator
    * @param rhs Right hand side argument of binary operator.
    */
   template<typename FromT> __attribute__((__always_inline__))
-  inline quaternion<T> constexpr &operator=(quaternion<FromT> &&rhs) noexcept {
+  inline constexpr quaternion<T> &operator=(quaternion<FromT> &&rhs) noexcept {
     v = std::move(rhs.v);
     w = static_cast<T>(std::move(rhs.w));
     return *this;
@@ -236,7 +236,7 @@ public:
    * @param rhs Right hand side argument of binary operator.
    */
   [[nodiscard]]
-  inline quaternion<T> constexpr operator+(quaternion<T> const &rhs) const noexcept __attribute__((__always_inline__)) {
+  inline constexpr quaternion<T> operator+(quaternion<T> const &rhs) const noexcept __attribute__((__always_inline__)) {
     return quaternion<T>(w + rhs.w, v + rhs.v);
   }
 
@@ -245,7 +245,7 @@ public:
    * @param rhs Right hand side argument of binary operator.
    */
   [[nodiscard]]
-  inline quaternion<T> constexpr operator*(quaternion<T> const &rhs) const noexcept __attribute__((__always_inline__)) {
+  inline constexpr quaternion<T> operator*(quaternion<T> const &rhs) const noexcept __attribute__((__always_inline__)) {
     return quaternion<T>(w * rhs.w   - v.x * rhs.v.x - v.y * rhs.v.y - v.z * rhs.v.z,
                          w * rhs.v.x + v.x * rhs.w   + v.y * rhs.v.z - v.z * rhs.v.y,
                          w * rhs.v.y - v.x * rhs.v.z + v.y * rhs.w   + v.z * rhs.v.x,
@@ -257,7 +257,7 @@ public:
    * @param rhs Right hand side argument of binary operator.
    */
   [[nodiscard]]
-  inline quaternion<T> constexpr operator*(T rhs) const noexcept __attribute__((__always_inline__)) {
+  inline constexpr quaternion<T> operator*(T rhs) const noexcept __attribute__((__always_inline__)) {
     return quaternion<T>(w * rhs, v * rhs);
   }
 
@@ -266,7 +266,7 @@ public:
    * @param rhs Right hand side argument of binary operator.
    */
   [[nodiscard]]
-  inline quaternion<T> constexpr operator/(T rhs) const noexcept __attribute__((__always_inline__)) {
+  inline constexpr quaternion<T> operator/(T rhs) const noexcept __attribute__((__always_inline__)) {
     return quaternion<T>(w / rhs, v / rhs);
   }
 
@@ -275,7 +275,7 @@ public:
    * @param rhs Right hand side argument of binary operator.
    */
   [[nodiscard]]
-  inline quaternion<T> constexpr operator-(quaternion<T> const &rhs) const noexcept __attribute__((__always_inline__)) {
+  inline constexpr quaternion<T> operator-(quaternion<T> const &rhs) const noexcept __attribute__((__always_inline__)) {
     return quaternion<T>(w - rhs.w, v - rhs.v);
   }
 
@@ -283,7 +283,7 @@ public:
    * Addition operator
    * @param rhs Right hand side argument of binary operator.
    */
-  inline quaternion<T> constexpr &operator+=(quaternion<T> const &rhs) noexcept __attribute__((__always_inline__)) {
+  inline constexpr quaternion<T> &operator+=(quaternion<T> const &rhs) noexcept __attribute__((__always_inline__)) {
     w += rhs.w;
     v += rhs.v;
     return *this;
@@ -293,7 +293,7 @@ public:
    * Subtraction operator
    * @param rhs Right hand side argument of binary operator.
    */
-  inline quaternion<T> constexpr &operator-=(quaternion<T> const &rhs) noexcept __attribute__((__always_inline__)) {
+  inline constexpr quaternion<T> &operator-=(quaternion<T> const &rhs) noexcept __attribute__((__always_inline__)) {
     w -= rhs.w;
     v -= rhs.v;
     return *this;
@@ -303,8 +303,8 @@ public:
    * Multiplication operator
    * @param rhs Right hand side argument of binary operator.
    */
-  inline quaternion<T> constexpr &operator*=(quaternion<T> const &rhs) noexcept __attribute__((__always_inline__)) {
-    quaternion q = (*this) * rhs;
+  inline constexpr quaternion<T> &operator*=(quaternion<T> const &rhs) noexcept __attribute__((__always_inline__)) {
+    quaternion q{(*this) * rhs};
     v = q.v;
     w = q.w;
     return *this;
@@ -314,7 +314,7 @@ public:
    * Multiplication operator
    * @param rhs Right hand side argument of binary operator.
    */
-  inline quaternion<T> constexpr &operator*=(T rhs) noexcept __attribute__((__always_inline__)) {
+  inline constexpr quaternion<T> &operator*=(T rhs) noexcept __attribute__((__always_inline__)) {
     w *= rhs;
     v *= rhs;
     return *this;
@@ -324,7 +324,7 @@ public:
    * Division operator
    * @param rhs Right hand side argument of binary operator.
    */
-  inline quaternion<T> constexpr &operator/=(T rhs) noexcept __attribute__((__always_inline__)) {
+  inline constexpr quaternion<T> &operator/=(T rhs) noexcept __attribute__((__always_inline__)) {
     w /= rhs;
     v /= rhs;
     return *this;
@@ -338,7 +338,7 @@ public:
    * for all quaternion coordinates.  Otherwise, exact equality comparison is used.
    */
   [[nodiscard]]
-  inline bool constexpr operator==(quaternion<T> const &rhs) const noexcept __attribute__((__always_inline__)) {
+  inline constexpr bool operator==(quaternion<T> const &rhs) const noexcept __attribute__((__always_inline__)) {
     #ifdef VECTORSTORM_SOFT_COMPARE
       return (std::abs(w - rhs.w) < epsilon<T>) && v == rhs.v;
     #else
@@ -355,7 +355,7 @@ public:
    * @return not (lhs == rhs)
    */
   [[nodiscard]]
-  inline bool constexpr operator!=(quaternion<T> const &rhs) const noexcept __attribute__((__always_inline__)) {
+  inline constexpr bool operator!=(quaternion<T> const &rhs) const noexcept __attribute__((__always_inline__)) {
     return !(*this == rhs);
   }
   /**
@@ -363,7 +363,7 @@ public:
    * @param rhs Right hand side argument of binary operator.
    */
   [[nodiscard]]
-  inline T constexpr dot(quaternion<T> const &rhs) const noexcept __attribute__((__always_inline__)) {
+  inline constexpr T dot(quaternion<T> const &rhs) const noexcept __attribute__((__always_inline__)) {
     return (w * rhs.w) + v.dot(rhs.v);
   }
 
@@ -373,7 +373,7 @@ public:
    * @return negated quaternion
    */
   [[nodiscard]]
-  inline quaternion<T> constexpr operator-() const noexcept __attribute__((__always_inline__)) {
+  inline constexpr quaternion<T> operator-() const noexcept __attribute__((__always_inline__)) {
     return quaternion<T>(-w, -v);
   }
 
@@ -382,7 +382,7 @@ public:
    * @return conjugated quaternion
    */
   [[nodiscard]]
-  inline quaternion<T> constexpr operator~() const noexcept __attribute__((__always_inline__)) {
+  inline constexpr quaternion<T> operator~() const noexcept __attribute__((__always_inline__)) {
     return quaternion<T>(w, -v);
   }
 
@@ -394,7 +394,7 @@ public:
    * of more expensive length() method.
    */
   [[nodiscard]]
-  inline T constexpr length_sq() const noexcept __attribute__((__always_inline__)) {
+  inline constexpr T length_sq() const noexcept __attribute__((__always_inline__)) {
     return w * w + v.length_sq();
   }
 
@@ -403,7 +403,7 @@ public:
    * @return Length of quaternion.
    */
   template<sqrt_mode mode = sqrt_mode::std> [[nodiscard]]
-  inline T __attribute__((__always_inline__)) constexpr length() const noexcept {
+  inline constexpr T __attribute__((__always_inline__)) length() const noexcept {
     return sqrt_switchable<mode>(length_sq());
   }
   /**
@@ -411,7 +411,7 @@ public:
    * @return Length of quaternion.
    */
   [[nodiscard]] [[deprecated("Use length<quat<T>::sqrt_mode::fast>()")]]
-  inline T constexpr length_fast() const noexcept __attribute__((__always_inline__)) {
+  inline constexpr T length_fast() const noexcept __attribute__((__always_inline__)) {
     return length<sqrt_mode::fast>();
   }
   /**
@@ -419,7 +419,7 @@ public:
    * @return Length of quaternion.
    */
   [[nodiscard]] [[deprecated("Use length<quat<T>::sqrt_mode::coarse>()")]]
-  inline T constexpr length_faster() const noexcept __attribute__((__always_inline__)) {
+  inline constexpr T length_faster() const noexcept __attribute__((__always_inline__)) {
     return length<sqrt_mode::coarse>();
   }
 
@@ -427,36 +427,36 @@ public:
    * normalise quaternion
    */
   template<sqrt_mode mode = sqrt_mode::std>
-  inline void __attribute__((__always_inline__)) constexpr normalise() noexcept {
+  inline constexpr void __attribute__((__always_inline__)) normalise() noexcept {
     *this /= length<mode>();
   }
   [[deprecated("Use normalise<quat<T>::sqrt_mode::fast>()")]]
-  inline void constexpr normalise_fast() noexcept __attribute__((__always_inline__)) {
+  inline constexpr void normalise_fast() noexcept __attribute__((__always_inline__)) {
     normalise<sqrt_mode::fast>();
   }
   [[deprecated("Use normalise<quat<T>::sqrt_mode::coarse>()")]]
-  inline void constexpr normalise_faster() noexcept __attribute__((__always_inline__)) {
+  inline constexpr void normalise_faster() noexcept __attribute__((__always_inline__)) {
     normalise<sqrt_mode::coarse>();
   }
   template<sqrt_mode mode = sqrt_mode::std> [[nodiscard]]
-  inline quaternion<T> __attribute__((__always_inline__)) constexpr normalise_copy() const noexcept {
+  inline constexpr quaternion<T> __attribute__((__always_inline__)) normalise_copy() const noexcept {
     return *this / length<mode>();
   }
   [[nodiscard]] [[deprecated("Use normalise_copy<quat<T>::sqrt_mode::fast>()")]]
-  inline quaternion<T> constexpr normalise_copy_fast() const noexcept __attribute__((__always_inline__)) {
+  inline constexpr quaternion<T> normalise_copy_fast() const noexcept __attribute__((__always_inline__)) {
     return normalise_copy<sqrt_mode::fast>();
   }
   [[nodiscard]] [[deprecated("Use normalise_copy<quat<T>::sqrt_mode::coarse>()")]]
-  inline quaternion<T> constexpr normalise_copy_faster() const noexcept __attribute__((__always_inline__)) {
+  inline constexpr quaternion<T> normalise_copy_faster() const noexcept __attribute__((__always_inline__)) {
     return normalise_copy<sqrt_mode::coarse>();
   }
 
-  inline void constexpr conjugate() noexcept __attribute__((__always_inline__)) {
+  inline constexpr void conjugate() noexcept __attribute__((__always_inline__)) {
     v = -v;
   }
 
   [[nodiscard]]
-  inline quaternion<T> constexpr conjugate_copy() const noexcept __attribute__((__always_inline__)) {
+  inline constexpr quaternion<T> conjugate_copy() const noexcept __attribute__((__always_inline__)) {
     return quaternion<T>(w, -v);
   }
 
@@ -470,14 +470,14 @@ public:
    * that you're using a unit quaternion (i.e., norm() == 1),
    * it will be significantly faster to use conjugate() instead.
    */
-  inline void constexpr invert() noexcept __attribute__((__always_inline__)) {
-    T l = length();
+  inline constexpr void invert() noexcept __attribute__((__always_inline__)) {
+    T l{length()};
     conjugate();
     *this /= l;
   }
 
   [[nodiscard]]
-  inline quaternion<T> constexpr invert_copy() const noexcept __attribute__((__always_inline__)) {
+  inline constexpr quaternion<T> invert_copy() const noexcept __attribute__((__always_inline__)) {
     return conjugate_copy() / length();
   }
 
@@ -489,7 +489,7 @@ public:
    * @return quaternion object representing transformation.
    */
   [[nodiscard]]
-  inline static quaternion<T> constexpr from_euler_angles(T x, T y, T z) noexcept __attribute__((__always_inline__)) {
+  inline static constexpr quaternion<T> from_euler_angles(T x, T y, T z) noexcept __attribute__((__always_inline__)) {
     return quaternion<T>(from_axis_rot(vector3<T>(1, 0, 0), x) *
                          from_axis_rot(vector3<T>(0, 1, 0), y) *
                          from_axis_rot(vector3<T>(0, 0, 1), z));
@@ -503,7 +503,7 @@ public:
    * @return quaternion object representing transformation.
    */
   [[nodiscard]]
-  inline static quaternion<T> constexpr from_euler_angles_rad(T x, T y, T z) noexcept __attribute__((__always_inline__)) {
+  inline static constexpr quaternion<T> from_euler_angles_rad(T x, T y, T z) noexcept __attribute__((__always_inline__)) {
     return quaternion<T>(from_axis_rot_rad(vector3<T>(1, 0, 0), x) *
                          from_axis_rot_rad(vector3<T>(0, 1, 0), y) *
                          from_axis_rot_rad(vector3<T>(0, 0, 1), z));
@@ -515,7 +515,7 @@ public:
    * @param angleDeg Angle of rotation around axis (in degrees).
    */
   [[nodiscard]]
-  inline static quaternion<T> constexpr from_axis_rot(vector3<T> const &axis, T angleDeg) noexcept __attribute__((__always_inline__)) {
+  inline static constexpr quaternion<T> from_axis_rot(vector3<T> const &axis, T angleDeg) noexcept __attribute__((__always_inline__)) {
     return from_axis_rot_rad(axis, deg2rad(angleDeg));
   }
 
@@ -525,9 +525,9 @@ public:
    * @param angleRad Angle of rotation around axis (in radians).
    */
   [[nodiscard]]
-  inline static quaternion<T> constexpr from_axis_rot_rad(vector3<T> const &axis, T angleRad) noexcept __attribute__((__always_inline__)) {
-    T temp_sin = static_cast<T>(0);
-    T temp_cos = static_cast<T>(0);
+  inline static constexpr quaternion<T> from_axis_rot_rad(vector3<T> const &axis, T angleRad) noexcept __attribute__((__always_inline__)) {
+    T temp_sin{static_cast<T>(0)};
+    T temp_cos{static_cast<T>(0)};
     sincos_any(angleRad / static_cast<T>(2.0), temp_sin, temp_cos);
     return quaternion<T>(temp_cos, axis * temp_sin);
   }
@@ -537,7 +537,7 @@ public:
    * @param angle The angle of rotation
    * @param axis The axis around which the rotation is
    */
-  inline void constexpr to_angle_axis(T &angle, vector3<T> &axis) const noexcept __attribute__((__always_inline__)) {
+  inline constexpr void to_angle_axis(T &angle, vector3<T> &axis) const noexcept __attribute__((__always_inline__)) {
     T const square_length{v.length_sq()};
     if(square_length == 0) {
       angle = static_cast<T>(0);
@@ -553,7 +553,7 @@ public:
    * @return Rotation matrix expressing this quaternion.
    */
   [[nodiscard]]
-  inline matrix3<T> constexpr rotmatrix() const noexcept __attribute__((__always_inline__)) {
+  inline constexpr matrix3<T> rotmatrix() const noexcept __attribute__((__always_inline__)) {
     return matrix3<T>(static_cast<T>(1) - static_cast<T>(2) * (v.y * v.y + v.z * v.z),
                       static_cast<T>(2)                     * (v.x * v.y + v.z * w  ),
                       static_cast<T>(2)                     * (v.x * v.z - v.y * w  ),
@@ -574,7 +574,7 @@ public:
    * @return Transformation matrix expressing this quaternion.
    */
   [[nodiscard]]
-  inline matrix4<T> constexpr transform() const noexcept __attribute__((__always_inline__)) {
+  inline constexpr matrix4<T> transform() const noexcept __attribute__((__always_inline__)) {
     return matrix4<T>(static_cast<T>(1) - static_cast<T>(2) * (v.y * v.y + v.z * v.z),
                       static_cast<T>(2)                     * (v.x * v.y + v.z * w  ),
                       static_cast<T>(2)                     * (v.x * v.z - v.y * w  ),
@@ -606,7 +606,7 @@ public:
    * can get result (extrapolation?)
    */
   [[nodiscard("Interpolation does not modify the input quaternions")]]
-  inline quaternion<T> constexpr lerp(T fact, quaternion<T> const &rhs) const noexcept __attribute__((__always_inline__)) {
+  inline constexpr quaternion<T> lerp(T fact, quaternion<T> const &rhs) const noexcept __attribute__((__always_inline__)) {
     return quaternion<T>((1 - fact) * w + fact * rhs.w, v.lerp(fact, rhs.v));
   }
 
@@ -619,18 +619,18 @@ public:
    * @return Result of interpolation.
    */
   template<sqrt_mode mode = sqrt_mode::std> [[nodiscard("Interpolation does not modify the input quaternions")]] __attribute__((__always_inline__))
-  inline quaternion<T> constexpr slerp(T fact, quaternion<T> const &rhs) const noexcept {
-    T cos_theta = std::clamp(dot(rhs), static_cast<T>(-1), static_cast<T>(1));  // clamp the dot product, as it can sometimes exceed 1.0 and cause acos to return NaN
-    quaternion<T> rhs_temp(rhs);
+  inline constexpr quaternion<T> slerp(T fact, quaternion<T> const &rhs) const noexcept {
+    T cos_theta{std::clamp(dot(rhs), static_cast<T>(-1), static_cast<T>(1))};   // clamp the dot product, as it can sometimes exceed 1.0 and cause acos to return NaN
+    quaternion<T> rhs_temp{rhs};
     if(cos_theta < static_cast<T>(0)) {                                         // dot(lhs, rhs) must be positive for smooth interpolation around poles; if not, flip rhs
       cos_theta = -cos_theta;
       rhs_temp = -rhs_temp;
     }
-    T const theta = static_cast<T>(std::acos(cos_theta));
+    T const theta{static_cast<T>(std::acos(cos_theta))};
     if(std::abs(theta) <= epsilon<T>) {
       return quaternion<T>{*this};
     } else {
-      T const sin_theta = static_cast<T>(sqrt_switchable<mode>(static_cast<T>(1) - cos_theta * cos_theta));
+      T const sin_theta{static_cast<T>(sqrt_switchable<mode>(static_cast<T>(1) - cos_theta * cos_theta))};
       //if(std::abs(sin_theta) <= epsilon<T>) {
       #pragma GCC diagnostic push
       #pragma GCC diagnostic ignored "-Wfloat-equal"
@@ -639,8 +639,8 @@ public:
         // this point may only be reached extremely rarely?
         return quaternion<T>{static_cast<T>(0.5) * w + static_cast<T>(0.5) * rhs_temp.w, v.lerp(static_cast<T>(0.5), rhs_temp.v)};
       } else {
-        T const temp_a = static_cast<T>(std::sin((static_cast<T>(1) - fact) * theta)) / sin_theta;
-        T const temp_b = static_cast<T>(std::sin(fact * theta)) / sin_theta;
+        T const temp_a{static_cast<T>(std::sin((static_cast<T>(1) - fact) * theta)) / sin_theta};
+        T const temp_b{static_cast<T>(std::sin(fact * theta)) / sin_theta};
         return quaternion<T>{(w * temp_a) + (rhs_temp.w * temp_b),
                              (v * temp_a) + (rhs_temp.v * temp_b)};
       }
@@ -659,7 +659,7 @@ public:
    * Gets string representation.
    */
   [[nodiscard]]
-  inline std::string CONSTEXPR_IF_NO_CLANG to_string() const noexcept __attribute__((__always_inline__)) {
+  inline CONSTEXPR_IF_NO_CLANG std::string to_string() const noexcept __attribute__((__always_inline__)) {
     std::ostringstream oss;
     oss << *this;
     return oss.str();
@@ -673,7 +673,7 @@ public:
    */
   // matrix4 is convertible to matrix3 so the below is not useful
   /*
-  inline static quaternion<T> constexpr from_matrix(matrix4<T> const &m) noexcept __attribute__((__always_inline__)) {
+  inline static constexpr quaternion<T> from_matrix(matrix4<T> const &m) noexcept __attribute__((__always_inline__)) {
     return from_matrix(m.get_rotation());
   }
   */
@@ -685,10 +685,10 @@ public:
    * @return quaternion representing rotation of matrix m.
    */
   template<sqrt_mode mode = sqrt_mode::std> [[nodiscard]] __attribute__((__always_inline__))
-  inline static quaternion<T> constexpr from_matrix(matrix3<T> const &mat) noexcept {
-    T const tr = mat(1, 1) + mat(2, 2) + mat(3, 3);
+  inline static constexpr quaternion<T> from_matrix(matrix3<T> const &mat) noexcept {
+    T const tr{mat(1, 1) + mat(2, 2) + mat(3, 3)};
     if(tr >= epsilon<T>) {
-      T const s = static_cast<T>(0.5) / static_cast<T>(sqrt_switchable<mode>(tr + static_cast<T>(1.0)));
+      T const s{static_cast<T>(0.5) / static_cast<T>(sqrt_switchable<mode>(tr + static_cast<T>(1.0)))};
       return quaternion<T>(static_cast<T>(0.25)    / s,
                            (mat(3, 2) - mat(2, 3)) * s,
                            (mat(1, 3) - mat(3, 1)) * s,
@@ -696,7 +696,7 @@ public:
     } else {
       if(mat(1, 1) > mat(2, 2)) {
         if(mat(1, 1) > mat(3, 3)) {
-          T const s = static_cast<T>(2.0) * static_cast<T>(sqrt_switchable<mode>(static_cast<T>(1.0) + mat(1, 1) - mat(2, 2) - mat(3, 3)));
+          T const s{static_cast<T>(2.0) * static_cast<T>(sqrt_switchable<mode>(static_cast<T>(1.0) + mat(1, 1) - mat(2, 2) - mat(3, 3)))};
           return quaternion<T>((mat(3, 2) - mat(2, 3)) / s,
                                static_cast<T>(0.25)    * s,
                                (mat(1, 2) + mat(2, 1)) / s,
@@ -704,14 +704,14 @@ public:
         }
       } else {
         if(mat(2, 2) > mat(3, 3)) {
-          T const s = static_cast<T>(2.0) * static_cast<T>(sqrt_switchable<mode>(static_cast<T>(1.0) + mat(2, 2) - mat(1, 1) - mat(3, 3)));
+          T const s{static_cast<T>(2.0) * static_cast<T>(sqrt_switchable<mode>(static_cast<T>(1.0) + mat(2, 2) - mat(1, 1) - mat(3, 3)))};
           return quaternion<T>((mat(1, 3) - mat(3, 1)) / s,
                                (mat(1, 2) + mat(2, 1)) / s,
                                static_cast<T>(0.25)    * s,
                                (mat(2, 3) + mat(3, 2)) / s);
         }
       }
-      T const s = static_cast<T>(2.0) * static_cast<T>(sqrt_switchable<mode>(static_cast<T>(1.0) + mat(3, 3) - mat(1, 1) - mat(2, 2)));
+      T const s{static_cast<T>(2.0) * static_cast<T>(sqrt_switchable<mode>(static_cast<T>(1.0) + mat(3, 3) - mat(1, 1) - mat(2, 2)))};
       return quaternion<T>((mat(2, 1) - mat(1, 2)) / s,
                            (mat(1, 3) + mat(3, 1)) / s,
                            (mat(2, 3) + mat(3, 2)) / s,
@@ -743,8 +743,8 @@ struct hash<quaternion<T>> {
    * Note: You need to #include <boost/functional/hash.hpp> before instantiating this.
    * @return Hash value
    */
-  size_t operator()(const quaternion<T> &value) const {
-    size_t hashvalue = 0;
+  size_t operator()(quaternion<T> const &value) const {
+    size_t hashvalue{0};
     boost::hash_combine(hashvalue, value.v.x);
     boost::hash_combine(hashvalue, value.v.y);
     boost::hash_combine(hashvalue, value.v.z);
@@ -763,7 +763,7 @@ struct hash<quaternion<T>> {
  */
 template<typename T>
 size_t hash_value(quaternion<T> const &value) {
-  size_t hashvalue = 0;
+  size_t hashvalue{0};
   boost::hash_combine(hashvalue, value.v.x);
   boost::hash_combine(hashvalue, value.v.y);
   boost::hash_combine(hashvalue, value.v.z);

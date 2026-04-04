@@ -124,7 +124,7 @@ public:
   /**
    * Resets matrix to be identity matrix
    */
-  inline void constexpr identity() noexcept __attribute__((__always_inline__)) {
+  inline constexpr void identity() noexcept __attribute__((__always_inline__)) {
     data = {1, 0, 0,
             0, 1, 0,
             0, 0, 1};
@@ -137,7 +137,7 @@ public:
    * @param zDeg Angle (in degrees) of rotation around axis Z.
    */
   [[nodiscard]]
-  inline static matrix3<T> constexpr create_rotation_from_euler_angles(T xDeg, T yDeg, T zDeg) noexcept __attribute__((__always_inline__)) {
+  inline static constexpr matrix3<T> create_rotation_from_euler_angles(T xDeg, T yDeg, T zDeg) noexcept __attribute__((__always_inline__)) {
     return create_rotation_from_euler_angles_rad(deg2rad(xDeg), deg2rad(yDeg), deg2rad(zDeg));
   }
 
@@ -148,23 +148,23 @@ public:
    * @param zRads Angle (in radians) of rotation around axis Z.
    */
   [[nodiscard]]
-  inline static matrix3<T> constexpr create_rotation_from_euler_angles_rad(T xRads, T yRads, T zRads) noexcept __attribute__((__always_inline__)) {
+  inline static constexpr matrix3<T> create_rotation_from_euler_angles_rad(T xRads, T yRads, T zRads) noexcept __attribute__((__always_inline__)) {
     // adapted from Inigo Quilez: http://www.iquilezles.org/www/articles/noacos/noacos.htm
     //T sin_xRads, cos_xRads, sin_yRads, cos_yRads, sin_zRads, cos_zRads;
     // zero-initialisation is required for gcc not to complain when the function is constexpr
     // the static cast is to avoid narrowing conversion warnings when used with ints
-    T sin_xRads = static_cast<T>(0);
-    T cos_xRads = static_cast<T>(0);
-    T sin_yRads = static_cast<T>(0);
-    T cos_yRads = static_cast<T>(0);
-    T sin_zRads = static_cast<T>(0);
-    T cos_zRads = static_cast<T>(0);
+    T sin_xRads{static_cast<T>(0)};
+    T cos_xRads{static_cast<T>(0)};
+    T sin_yRads{static_cast<T>(0)};
+    T cos_yRads{static_cast<T>(0)};
+    T sin_zRads{static_cast<T>(0)};
+    T cos_zRads{static_cast<T>(0)};
     sincos_any(-xRads, sin_xRads, cos_xRads);
     sincos_any(-yRads, sin_yRads, cos_yRads);
     sincos_any(-zRads, sin_zRads, cos_zRads);
-    T const temp_sin_z_sin_y = sin_zRads * sin_yRads;
-    T const temp_cos_z_sin_y = cos_zRads * sin_yRads;
-    T const temp_cos_z_cos_y = cos_zRads * cos_yRads;
+    T const temp_sin_z_sin_y{sin_zRads * sin_yRads};
+    T const temp_cos_z_sin_y{cos_zRads * sin_yRads};
+    T const temp_cos_z_cos_y{cos_zRads * cos_yRads};
     return matrix3<T>(temp_cos_z_cos_y,
                       temp_cos_z_sin_y * sin_xRads - sin_zRads * cos_xRads,
                       temp_cos_z_sin_y * cos_xRads + sin_zRads * sin_xRads,
@@ -184,7 +184,7 @@ public:
    * @param angle Angle (in degrees) of rotation around axis.
    */
   [[nodiscard]]
-  inline static matrix3<T> constexpr create_rotation_around_axis(vector3<T> const &axis, T angle) noexcept __attribute__((__always_inline__)) {
+  inline static constexpr matrix3<T> create_rotation_around_axis(vector3<T> const &axis, T angle) noexcept __attribute__((__always_inline__)) {
     return create_rotation_around_axis_rad(axis, deg2rad(angle));
   }
 
@@ -194,14 +194,14 @@ public:
    * @param angle Angle (in radians) of rotation around axis.
    */
   [[nodiscard]]
-  inline static matrix3<T> constexpr create_rotation_around_axis_rad(vector3<T> const &axis, T angle) noexcept __attribute__((__always_inline__)) {
+  inline static constexpr matrix3<T> create_rotation_around_axis_rad(vector3<T> const &axis, T angle) noexcept __attribute__((__always_inline__)) {
     // adapted from Inigo Quilez: http://www.iquilezles.org/www/articles/noacos/noacos.htm
     // zero-initialisation is required for gcc not to complain when the function is constexpr
     // the static cast is to avoid narrowing conversion warnings when used with ints
-    T sin_a = static_cast<T>(0);
-    T cos_a = static_cast<T>(0);
+    T sin_a{static_cast<T>(0)};
+    T cos_a{static_cast<T>(0)};
     sincos_any(-angle, sin_a, cos_a);
-    T const cos_a_inv = static_cast<T>(1) - cos_a;
+    T const cos_a_inv{static_cast<T>(1) - cos_a};
     return matrix3<T>(axis.x * axis.x * cos_a_inv + cos_a,
                       axis.y * axis.x * cos_a_inv - sin_a * axis.z,
                       axis.z * axis.x * cos_a_inv + sin_a * axis.y,
@@ -223,15 +223,15 @@ public:
    * @return An instance of matrix3<T> representing rotation between the two vectors.
    */
   [[nodiscard]]
-  inline static matrix3<T> constexpr create_rotation_between_vectors(vector3<T> const &from, vector3<T> const &to) noexcept __attribute__((__always_inline__)) {
+  inline static constexpr matrix3<T> create_rotation_between_vectors(vector3<T> const &from, vector3<T> const &to) noexcept __attribute__((__always_inline__)) {
     // the static cast is to avoid narrowing conversion warnings when used with ints
-    vector3<T> const cross(to.cross(from));
-    T const dot = from.dot(to);
-    T temp1 = static_cast<T>(1) + dot;
+    vector3<T> const cross{to.cross(from)};
+    T const dot{from.dot(to)};
+    T temp1{static_cast<T>(1) + dot};
     if(temp1 == static_cast<T>(0)) {                                            // a safety check is required to avoid a divide by zero
       temp1 = epsilon<T>;
     }
-    T const temp_k = static_cast<T>(1) / temp1;
+    T const temp_k{static_cast<T>(1) / temp1};
     return matrix3<T>(cross.x * cross.x * temp_k + dot,
                       cross.y * cross.x * temp_k - cross.z,
                       cross.z * cross.x * temp_k + cross.y,
@@ -253,7 +253,7 @@ public:
    * @return Resulting matrix that's oriented to the target vector
    */
   [[nodiscard]]
-  inline static matrix3<T> constexpr create_rotation_aligned_to_vector(vector3<T> const &target, vector3<T> const &up_dir) noexcept __attribute__((__always_inline__)) {
+  inline static constexpr matrix3<T> create_rotation_aligned_to_vector(vector3<T> const &target, vector3<T> const &up_dir) noexcept __attribute__((__always_inline__)) {
     vector3<T> const forward{target.normalise_copy()};
     vector3<T> const side{forward.cross(up_dir).normalise_safe_copy()};         // Side = forward x up
     vector3<T> const up{side.cross(forward)};                                   // Recompute up as: up = side x forward
@@ -275,7 +275,7 @@ public:
    * Creates rotation matrix from ODE matrix.
    */
   template<typename It> [[nodiscard]] __attribute__((__always_inline__))
-  inline static matrix3<T> constexpr from_ode(It const *mat) noexcept {
+  inline static constexpr matrix3<T> from_ode(It const *mat) noexcept {
     return matrix3<T>(static_cast<T>(mat[0]), static_cast<T>(mat[4]), static_cast<T>(mat[8]),
                       static_cast<T>(mat[1]), static_cast<T>(mat[5]), static_cast<T>(mat[9]),
                       static_cast<T>(mat[2]), static_cast<T>(mat[6]), static_cast<T>(mat[10]));
@@ -288,7 +288,7 @@ public:
    * @return An instance of matrix3<T> representing @a arr
    */
   template<typename FromT> [[nodiscard]] __attribute__((__always_inline__))
-  inline static matrix3<T> constexpr from_row_major_array(FromT const *arr) noexcept {
+  inline static constexpr matrix3<T> from_row_major_array(FromT const *arr) noexcept {
     return matrix3<T>(static_cast<T>(arr[0]), static_cast<T>(arr[3]), static_cast<T>(arr[6]),
                       static_cast<T>(arr[1]), static_cast<T>(arr[4]), static_cast<T>(arr[7]),
                       static_cast<T>(arr[2]), static_cast<T>(arr[5]), static_cast<T>(arr[8]));
@@ -301,7 +301,7 @@ public:
    * @return An instance of matrix3<T> representing @a arr
    */
   template<typename FromT> [[nodiscard]] __attribute__((__always_inline__))
-  inline static matrix3<T> constexpr from_column_major_array(FromT const *arr) noexcept {
+  inline static constexpr matrix3<T> from_column_major_array(FromT const *arr) noexcept {
     return matrix3<T>(static_cast<T>(arr[0]), static_cast<T>(arr[1]), static_cast<T>(arr[2]),
                       static_cast<T>(arr[3]), static_cast<T>(arr[4]), static_cast<T>(arr[5]),
                       static_cast<T>(arr[6]), static_cast<T>(arr[7]), static_cast<T>(arr[8]));
@@ -317,7 +317,7 @@ public:
    * same for y-coordinate, z-coordinate, and w-coordinate.
    */
   [[nodiscard]]
-  inline bool constexpr operator==(matrix3<T> const &rhs) const noexcept __attribute__((__always_inline__)) {
+  inline constexpr bool operator==(matrix3<T> const &rhs) const noexcept __attribute__((__always_inline__)) {
     #ifdef VECTORSTORM_SOFT_COMPARE
       return std::abs(data[0] - rhs.data[0]) < epsilon<T> &&
              std::abs(data[1] - rhs.data[1]) < epsilon<T> &&
@@ -350,7 +350,7 @@ public:
    * @return not (lhs == rhs)
    */
   [[nodiscard]]
-  inline bool constexpr operator!=(matrix3<T> const &rhs) const noexcept __attribute__((__always_inline__)) {
+  inline constexpr bool operator!=(matrix3<T> const &rhs) const noexcept __attribute__((__always_inline__)) {
     return !(*this == rhs);
   }
 
@@ -361,7 +361,7 @@ public:
    * @param y Number of row (0..2)
    */
   [[nodiscard]]
-  inline T constexpr &operator[](unsigned int x, unsigned int y) noexcept __attribute__((__always_inline__)) {
+  inline constexpr T &operator[](unsigned int x, unsigned int y) noexcept __attribute__((__always_inline__)) {
     return data[x * 3 + y];
   }
   /**
@@ -370,7 +370,7 @@ public:
    * @param y Number of row (0..2)
    */
   [[nodiscard]]
-  inline T constexpr const &operator[](unsigned int x, unsigned int y) const noexcept __attribute__((__always_inline__)) {
+  inline constexpr T const &operator[](unsigned int x, unsigned int y) const noexcept __attribute__((__always_inline__)) {
     return data[x * 3 + y];
   }
 
@@ -380,7 +380,7 @@ public:
    * @param y Number of row (0..2)
    */
   [[nodiscard]]
-  inline T constexpr &at(unsigned int x, unsigned int y) __attribute__((__always_inline__)) {
+  inline constexpr T &at(unsigned int x, unsigned int y) __attribute__((__always_inline__)) {
     if(x > 2 || y > 2) throw std::out_of_range("Matrix access at() function accepts x and y values 0..2, given " + std::to_string(x) + ", " + std::to_string(y));
     return data[x * 3 + y];
   }
@@ -391,7 +391,7 @@ public:
    * @param y Number of row (0..2)
    */
   [[nodiscard]]
-  inline T constexpr const &at(unsigned int x, unsigned int y) const __attribute__((__always_inline__)) {
+  inline constexpr T const &at(unsigned int x, unsigned int y) const __attribute__((__always_inline__)) {
     if(x > 2 || y > 2) throw std::out_of_range("Matrix access at() function accepts x and y values 0..2, given " + std::to_string(x) + ", " + std::to_string(y));
     return data[x * 3 + y];
   }
@@ -402,7 +402,7 @@ public:
    * @param j Number of column (1..3)
    */
   [[nodiscard]] [[deprecated("Use either multidimensional operator[] or .at(), counting from 0")]]
-  inline T constexpr &operator()(unsigned int i, unsigned int j) noexcept __attribute__((__always_inline__)) {
+  inline constexpr T &operator()(unsigned int i, unsigned int j) noexcept __attribute__((__always_inline__)) {
     assert(j != 0 && j < 4);
     return operator[](j - 1, i - 1);
   }
@@ -413,7 +413,7 @@ public:
    * @param j Number of column (1..3)
    */
   [[nodiscard]] [[deprecated("Use either multidimensional operator[] or .at(), counting from 0")]]
-  inline T constexpr const &operator()(unsigned int i, unsigned int j) const noexcept __attribute__((__always_inline__)) {
+  inline constexpr T const &operator()(unsigned int i, unsigned int j) const noexcept __attribute__((__always_inline__)) {
     assert(j != 0 && j < 4);
     return operator[](j - 1, i - 1);
   }
@@ -422,7 +422,7 @@ public:
    * Returns transform (4x4) matrix including this as the rotation component.
    */
   [[nodiscard]]
-  inline matrix4<T> constexpr get_transform() const noexcept __attribute__((__always_inline__)) {
+  inline constexpr matrix4<T> get_transform() const noexcept __attribute__((__always_inline__)) {
     return matrix4<T>(data[0],           data[1],           data[2],           static_cast<T>(0),
                       data[3],           data[4],           data[5],           static_cast<T>(0),
                       data[6],           data[7],           data[8],           static_cast<T>(0),
@@ -433,14 +433,14 @@ public:
    * Copy operator
    * @param rhs Right hand side argument of binary operator.
    */
-  inline matrix3<T> constexpr &operator=(matrix3<T> const &rhs) noexcept __attribute__((__always_inline__)) = default;
+  inline constexpr matrix3<T> &operator=(matrix3<T> const &rhs) noexcept __attribute__((__always_inline__)) = default;
 
   /**
    * Copy casting operator
    * @param rhs Right hand side argument of binary operator.
    */
   template<typename FromT> __attribute__((__always_inline__))
-  inline matrix3<T> constexpr &operator=(matrix3<FromT> const &rhs) noexcept {
+  inline constexpr matrix3<T> &operator=(matrix3<FromT> const &rhs) noexcept {
     data[0] = static_cast<T>(rhs.data[0]);
     data[1] = static_cast<T>(rhs.data[1]);
     data[2] = static_cast<T>(rhs.data[2]);
@@ -457,7 +457,7 @@ public:
    * Copy operator
    * @param rhs Right hand side argument of binary operator.
    */
-  inline matrix3<T> constexpr &operator=(T const *rhs) noexcept __attribute__((__always_inline__)) {
+  inline constexpr matrix3<T> &operator=(T const *rhs) noexcept __attribute__((__always_inline__)) {
     /*
     for(unsigned int i{0}; i != 9; ++i) {
       data[i] = (T)rhs[i];
@@ -471,14 +471,14 @@ public:
    * Move assignment operator
    * @param rhs Right hand side argument of binary operator.
    */
-  inline matrix3<T> constexpr &operator=(matrix3<T> &&rhs) noexcept __attribute__((__always_inline__)) = default;
+  inline constexpr matrix3<T> &operator=(matrix3<T> &&rhs) noexcept __attribute__((__always_inline__)) = default;
 
   /**
    * Move assignment casting operator
    * @param rhs Right hand side argument of binary operator.
    */
   template<typename FromT> __attribute__((__always_inline__))
-  inline matrix3<T> constexpr &operator=(matrix3<FromT> &&rhs) noexcept {
+  inline constexpr matrix3<T> &operator=(matrix3<FromT> &&rhs) noexcept {
     data[0] = static_cast<T>(std::move(rhs.data[0]));
     data[1] = static_cast<T>(std::move(rhs.data[1]));
     data[2] = static_cast<T>(std::move(rhs.data[2]));
@@ -497,7 +497,7 @@ public:
    * @param rhs Right hand side argument of binary operator.
    */
   [[nodiscard]]
-  inline matrix3<T> constexpr operator+(matrix3<T> const &rhs) const noexcept __attribute__((__always_inline__)) {
+  inline constexpr matrix3<T> operator+(matrix3<T> const &rhs) const noexcept __attribute__((__always_inline__)) {
     return matrix3<T>(data[0] + rhs.data[0], data[1] + rhs.data[1], data[2] + rhs.data[2],
                       data[3] + rhs.data[3], data[4] + rhs.data[4], data[5] + rhs.data[5],
                       data[6] + rhs.data[6], data[7] + rhs.data[7], data[8] + rhs.data[8]);
@@ -508,7 +508,7 @@ public:
    * @param rhs Right hand side argument of binary operator.
    */
   [[nodiscard]]
-  inline matrix3<T> constexpr operator-(matrix3<T> const &rhs) const noexcept __attribute__((__always_inline__)) {
+  inline constexpr matrix3<T> operator-(matrix3<T> const &rhs) const noexcept __attribute__((__always_inline__)) {
     return matrix3<T>(data[0] - rhs.data[0], data[1] - rhs.data[1], data[2] - rhs.data[2],
                       data[3] - rhs.data[3], data[4] - rhs.data[4], data[5] - rhs.data[5],
                       data[6] - rhs.data[6], data[7] - rhs.data[7], data[8] - rhs.data[8]);
@@ -520,7 +520,7 @@ public:
    * @param rhs Right hand side argument of binary operator.
    */
   [[nodiscard]]
-  inline matrix3<T> constexpr operator+(T rhs) const noexcept __attribute__((__always_inline__)) {
+  inline constexpr matrix3<T> operator+(T rhs) const noexcept __attribute__((__always_inline__)) {
     return matrix3<T>(data[0] + rhs, data[1] + rhs, data[2] + rhs,
                       data[3] + rhs, data[4] + rhs, data[5] + rhs,
                       data[6] + rhs, data[7] + rhs, data[8] + rhs);
@@ -531,7 +531,7 @@ public:
    * @param rhs Right hand side argument of binary operator.
    */
   [[nodiscard]]
-  inline matrix3<T> constexpr operator-(T rhs) const noexcept __attribute__((__always_inline__)) {
+  inline constexpr matrix3<T> operator-(T rhs) const noexcept __attribute__((__always_inline__)) {
     return matrix3<T>(data[0] - rhs, data[1] - rhs, data[2] - rhs,
                       data[3] - rhs, data[4] - rhs, data[5] - rhs,
                       data[6] - rhs, data[7] - rhs, data[8] - rhs);
@@ -543,7 +543,7 @@ public:
    * @param rhs Right hand side argument of binary operator.
    */
   [[nodiscard]]
-  inline matrix3<T> constexpr operator*(T rhs) const noexcept __attribute__((__always_inline__)) {
+  inline constexpr matrix3<T> operator*(T rhs) const noexcept __attribute__((__always_inline__)) {
     return matrix3<T>(data[0] * rhs, data[1] * rhs, data[2] * rhs,
                       data[3] * rhs, data[4] * rhs, data[5] * rhs,
                       data[6] * rhs, data[7] * rhs, data[8] * rhs);
@@ -554,7 +554,7 @@ public:
    * @param rhs Right hand side argument of binary operator.
    */
   [[nodiscard]]
-  inline matrix3<T> constexpr operator/(T rhs) const noexcept __attribute__((__always_inline__)) {
+  inline constexpr matrix3<T> operator/(T rhs) const noexcept __attribute__((__always_inline__)) {
     return matrix3<T>(data[0] / rhs, data[1] / rhs, data[2] / rhs,
                       data[3] / rhs, data[4] / rhs, data[5] / rhs,
                       data[6] / rhs, data[7] / rhs, data[8] / rhs);
@@ -564,7 +564,7 @@ public:
    * Addition operator
    * @param rhs Right hand side argument of binary operator.
    */
-  inline matrix3<T> constexpr &operator+=(T rhs) noexcept __attribute__((__always_inline__)) {
+  inline constexpr matrix3<T> &operator+=(T rhs) noexcept __attribute__((__always_inline__)) {
     *this = *this + rhs;
     return *this;
   }
@@ -573,7 +573,7 @@ public:
    * Subtraction operator
    * @param rhs Right hand side argument of binary operator.
    */
-  inline matrix3<T> constexpr &operator-=(T rhs) noexcept __attribute__((__always_inline__)) {
+  inline constexpr matrix3<T> &operator-=(T rhs) noexcept __attribute__((__always_inline__)) {
     *this = *this - rhs;
     return *this;
   }
@@ -582,7 +582,7 @@ public:
    * Multiplication operator
    * @param rhs Right hand side argument of binary operator.
    */
-  inline matrix3<T> constexpr &operator*=(T rhs) noexcept __attribute__((__always_inline__)) {
+  inline constexpr matrix3<T> &operator*=(T rhs) noexcept __attribute__((__always_inline__)) {
     *this = *this * rhs;
     return *this;
   }
@@ -591,7 +591,7 @@ public:
    * Division operator
    * @param rhs Right hand side argument of binary operator.
    */
-  inline matrix3<T> constexpr &operator/=(T rhs) noexcept __attribute__((__always_inline__)) {
+  inline constexpr matrix3<T> &operator/=(T rhs) noexcept __attribute__((__always_inline__)) {
     *this = *this / rhs;
     return *this;
   }
@@ -602,7 +602,7 @@ public:
    * @param rhs Right hand side argument of binary operator.
    */
   [[nodiscard]]
-  inline vector3<T> constexpr operator*(vector3<T> const &rhs) const noexcept __attribute__((__always_inline__)) {
+  inline constexpr vector3<T> operator*(vector3<T> const &rhs) const noexcept __attribute__((__always_inline__)) {
     return vector3<T>(data[0] * rhs.x + data[3] * rhs.y + data[6] * rhs.z,
                       data[1] * rhs.x + data[4] * rhs.y + data[7] * rhs.z,
                       data[2] * rhs.x + data[5] * rhs.y + data[8] * rhs.z);
@@ -614,7 +614,7 @@ public:
    * Enabling vector4 rotation as if it's a vector3, maintaining W
    */
   [[nodiscard]]
-  inline vector4<T> constexpr operator*(vector4<T> const &rhs) const noexcept __attribute__((__always_inline__)) {
+  inline constexpr vector4<T> operator*(vector4<T> const &rhs) const noexcept __attribute__((__always_inline__)) {
     return vector4<T>(data[0] * rhs.x + data[3] * rhs.y + data[6] * rhs.z,
                       data[1] * rhs.x + data[4] * rhs.y + data[7] * rhs.z,
                       data[2] * rhs.x + data[5] * rhs.y + data[8] * rhs.z,
@@ -626,7 +626,7 @@ public:
    * @param rhs Right hand side argument of binary operator.
    */
   [[nodiscard]]
-  inline matrix3<T> constexpr operator*(matrix3<T> const &rhs) const noexcept __attribute__((__always_inline__)) {
+  inline constexpr matrix3<T> operator*(matrix3<T> const &rhs) const noexcept __attribute__((__always_inline__)) {
     return matrix3<T>(rhs.data[0] * data[0] + rhs.data[1] * data[3] + rhs.data[2] * data[6],
                       rhs.data[0] * data[1] + rhs.data[1] * data[4] + rhs.data[2] * data[7],
                       rhs.data[0] * data[2] + rhs.data[1] * data[5] + rhs.data[2] * data[8],
@@ -644,7 +644,7 @@ public:
    * Multiplication operator
    * @param rhs Right hand side argument of binary operator.
    */
-  inline matrix3<T> constexpr &operator*=(matrix3<T> const &rhs) noexcept __attribute__((__always_inline__)) {
+  inline constexpr matrix3<T> &operator*=(matrix3<T> const &rhs) noexcept __attribute__((__always_inline__)) {
     *this = *this * rhs;
     return *this;
   }
@@ -654,7 +654,7 @@ public:
    * Transpose matrix.
    */
   [[nodiscard("Transpose does not modify the input matrix")]]
-  inline matrix3<T> constexpr transpose() const noexcept __attribute__((__always_inline__)) {
+  inline constexpr matrix3<T> transpose() const noexcept __attribute__((__always_inline__)) {
     return matrix3<T>(data[0], data[3], data[6],
                       data[1], data[4], data[7],
                       data[2], data[5], data[8]);
@@ -670,11 +670,11 @@ public:
    * can get result (extrapolation?)
    */
   [[nodiscard("Interpolation does not modify the input matrix")]]
-  inline matrix3<T> constexpr lerp(T fact, matrix3<T> const &rhs) const noexcept __attribute__((__always_inline__)) {
+  inline constexpr matrix3<T> lerp(T fact, matrix3<T> const &rhs) const noexcept __attribute__((__always_inline__)) {
     return (*this) + (rhs - (*this)) * fact;
   }
 
-  inline T constexpr det() const noexcept __attribute__((__always_inline__)) {
+  inline constexpr T det() const noexcept __attribute__((__always_inline__)) {
     return   data[0] * data[4] * data[8] + data[1] * data[5] * data[6] + data[2] * data[3] * data[7]
            - data[0] * data[5] * data[7] - data[1] * data[3] * data[8] - data[2] * data[4] * data[6];
   }
@@ -684,7 +684,7 @@ public:
    * @return Inverse matrix of this matrix.
    */
   [[nodiscard("Inverse does not modify the input matrix")]]
-  inline matrix3<T> constexpr inverse() const noexcept __attribute__((__always_inline__)) {
+  inline constexpr matrix3<T> inverse() const noexcept __attribute__((__always_inline__)) {
     return matrix3<T>(data[4] * data[8] - data[7] * data[5],
                       data[7] * data[2] - data[1] * data[8],
                       data[1] * data[5] - data[4] * data[2],
@@ -703,14 +703,14 @@ public:
    * 3. normalises binormal and makes sure it is orthogonal to both normal and tangent.
    */
   template<sqrt_mode mode = sqrt_mode::std> __attribute__((__always_inline__))
-  inline void constexpr orthonormalise() noexcept {
+  inline constexpr void orthonormalise() noexcept {
     // normalize x:
     T const x_length{static_cast<T>(sqrt_switchable<mode>(data[0] * data[0] + data[1] * data[1] + data[2] * data[2]))};
     data[0] /= x_length;
     data[1] /= x_length;
     data[2] /= x_length;
     // z -= z * (x dot z):
-    T const x_dot_z = data[0] * data[6] + data[1] * data[7] + data[2] * data[8];
+    T const x_dot_z{data[0] * data[6] + data[1] * data[7] + data[2] * data[8]};
     data[6] -= data[6] * x_dot_z;
     data[7] -= data[7] * x_dot_z;
     data[8] -= data[8] * x_dot_z;
@@ -731,19 +731,19 @@ public:
    * @return Diagonalising quaternion.
    */
   template<sqrt_mode mode = sqrt_mode::std> [[nodiscard]]
-  inline quaternion<T> constexpr diagonaliser() {
+  inline constexpr quaternion<T> diagonaliser() {
     // Based loosely on Jacobi Transformations of a Symmetric Matrix, via S Melax.
     // Adapted from http://melax.github.io/diag.html
     // Diagonal matrix D = Q * A * Transpose(Q);  and  A = QT*D*Q
     // The rows of q are the eigenvectors D's diagonal is the eigenvalues
     // As per 'row' convention if float3x3 Q = q.getmatrix(); then v*Q = q*v*conj(q)
     unsigned int constexpr maxsteps{24};                                        // certainly wont need that many
-    quaternion<T> q(1, 0, 0, 0);
+    quaternion<T> q{1, 0, 0, 0};
     for(unsigned int i{0}; i != maxsteps; ++i) {
       matrix3<T> const Q{q.rotmatrix()};                                        // v*Q == q*v*conj(q)
       matrix3<T> const D{Q * *this * Q.transpose()};                            // A = Q^T*D*Q
-      vector3<T> offdiag(D[1, 2], D[0, 2], D[0, 1]);                            // elements not on the diagonal
-      vector3<T> om(std::fabs(offdiag.x), std::fabs(offdiag.y), std::fabs(offdiag.z)); // mag of each offdiag elem
+      vector3<T> offdiag{D[1, 2], D[0, 2], D[0, 1]};                            // elements not on the diagonal
+      vector3<T> om{std::fabs(offdiag.x), std::fabs(offdiag.y), std::fabs(offdiag.z)}; // mag of each offdiag elem
       unsigned int const k{(om.x > om.y && om.x > om.z) ? 0 : (om.y > om.z) ? 1 : 2}; // index of largest element of offdiag
       if(offdiag[k] == 0.0f) break;                                             // diagonal already
       unsigned int const k1{(k + 1) % 3};
@@ -756,7 +756,7 @@ public:
       T const c{1 / sqrt_switchable<mode>((t * t) + 1)};                        //  c= 1/(t^2+1) , t=s/c
       if(c == 1.0f) break;
 
-      quaternion<T> jr(0, 0, 0, 0);                                             // jacobi rotation for this iteration.
+      quaternion<T> jr{0, 0, 0, 0};                                             // jacobi rotation for this iteration.
       jr.vector[k] = sgn * sqrt_switchable<mode>((1.0f - c) / 2.0f);            // using 1/2 angle identity sin(a/2) = sqrt((1-cos(a))/2)
       jr.vector[k] *= -1.0f;                                                    // since our quat-to-matrix convention was for v*M instead of M*v
       jr.w = sqrt_switchable<mode>(1.0f - (jr.vector[k] * jr.vector[k]));
@@ -785,7 +785,7 @@ public:
    * used for passing matrix3<T> values to gl*[fd]v functions.
    */
   [[nodiscard]]
-  inline constexpr operator const T*() const noexcept __attribute__((__always_inline__)) {
+  inline constexpr operator T const*() const noexcept __attribute__((__always_inline__)) {
     return reinterpret_cast<T const*>(data.data());
   }
 
@@ -811,7 +811,7 @@ public:
    * Gets string representation.
    */
   [[nodiscard]]
-  inline std::string CONSTEXPR_IF_NO_CLANG to_string() const noexcept __attribute__((__always_inline__)) {
+  inline CONSTEXPR_IF_NO_CLANG std::string to_string() const noexcept __attribute__((__always_inline__)) {
     std::ostringstream oss;
     oss << *this;
     return oss.str();
@@ -866,7 +866,7 @@ public:
    * Copy operator
    * @param rhs Right hand side argument of binary operator.
    */
-  inline matrix3wgpu<T> constexpr &operator=(matrix3wgpu<T> const &rhs) noexcept __attribute__((__always_inline__)) = default;
+  inline constexpr matrix3wgpu<T> &operator=(matrix3wgpu<T> const &rhs) noexcept __attribute__((__always_inline__)) = default;
 };
 
 static_assert(std::is_trivially_copyable_v<matrix3<int>>);
@@ -893,9 +893,9 @@ namespace std {
  * @return Matrix of minimal coordinates.
  */
 template<typename T> [[nodiscard]]
-inline constexpr matrix3<T> min(matrix3<T> const &a, const matrix3<T> &b) noexcept __attribute__((__always_inline__)) __attribute__ ((pure));
+inline constexpr matrix3<T> min(matrix3<T> const &a, matrix3<T> const &b) noexcept __attribute__((__always_inline__)) __attribute__ ((pure));
 template<typename T>
-inline constexpr matrix3<T> min(matrix3<T> const &a, const matrix3<T> &b) noexcept {
+inline constexpr matrix3<T> min(matrix3<T> const &a, matrix3<T> const &b) noexcept {
   return {::std::min(a.data[0], b.data[0]),
           ::std::min(a.data[1], b.data[1]),
           ::std::min(a.data[2], b.data[2]),
@@ -914,9 +914,9 @@ inline constexpr matrix3<T> min(matrix3<T> const &a, const matrix3<T> &b) noexce
  * @return Matrix of maximal coordinates.
  */
 template<typename T> [[nodiscard]]
-inline constexpr matrix3<T> max(matrix3<T> const &a, const matrix3<T> &b) noexcept __attribute__((__always_inline__)) __attribute__ ((pure));
+inline constexpr matrix3<T> max(matrix3<T> const &a, matrix3<T> const &b) noexcept __attribute__((__always_inline__)) __attribute__ ((pure));
 template<typename T>
-inline constexpr matrix3<T> max(matrix3<T> const &a, const matrix3<T> &b) noexcept {
+inline constexpr matrix3<T> max(matrix3<T> const &a, matrix3<T> const &b) noexcept {
   return {::std::max(a.data[0], b.data[0]),
           ::std::max(a.data[1], b.data[1]),
           ::std::max(a.data[2], b.data[2]),
@@ -939,8 +939,8 @@ struct hash<matrix3<T>> {
    * Note: You need to #include <boost/functional/hash.hpp> before instantiating this.
    * @return Hash value
    */
-  size_t operator()(const matrix3<T> &value) const {
-    size_t hashvalue = 0;
+  size_t operator()(matrix3<T> const &value) const {
+    size_t hashvalue{0};
     boost::hash_combine(hashvalue, value.data[0]);
     boost::hash_combine(hashvalue, value.data[1]);
     boost::hash_combine(hashvalue, value.data[2]);
@@ -968,7 +968,7 @@ struct hash<matrix3<T>> {
  */
 template<typename T>
 size_t hash_value(matrix3<T> const &value) {
-  size_t hashvalue = 0;
+  size_t hashvalue{0};
   boost::hash_combine(hashvalue, value.data[0]);
   boost::hash_combine(hashvalue, value.data[1]);
   boost::hash_combine(hashvalue, value.data[2]);

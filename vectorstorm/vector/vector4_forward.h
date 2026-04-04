@@ -14,7 +14,7 @@ template<typename T> class vector4;
 
 namespace std {
 
-template<typename T> constexpr vector4<T> min(vector4<T> const &a, const vector4<T> &b) noexcept;
-template<typename T> constexpr vector4<T> max(vector4<T> const &a, const vector4<T> &b) noexcept;
+template<typename T> constexpr vector4<T> min(vector4<T> const &a, vector4<T> const &b) noexcept;
+template<typename T> constexpr vector4<T> max(vector4<T> const &a, vector4<T> const &b) noexcept;
 
 }
